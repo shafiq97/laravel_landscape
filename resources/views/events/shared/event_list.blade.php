@@ -1,6 +1,6 @@
 @php
-    /** @var \Illuminate\Database\Eloquent\Collection|\App\Models\Service[] $events */
-    /** @var ?string $noEventsMessage */
+    /** @var \Illuminate\Database\Eloquent\Collection|\App\Models\Service[] $events /
+ /* @var ?string $noEventsMessage */
     $showVisibility = $showVisibility ?? true;
 @endphp
 
@@ -17,13 +17,12 @@
                 <a href="{{ route('events.show', $service->slug) }}" class="list-group-item list-group-item-action">
                     <strong>{{ $service->name }}</strong>
                     <div>
-                        <img src="{{ asset('storage/'.$service->image) }}" width="200" alt="Image">
-
+                        <img src="{{ asset('storage/' . $service->image) }}" width="200" alt="Image">
                     </div>
-                    <div>
-                        <i class="fa fa-fw fa-clock"></i>
-                        @include('events.shared.event_dates')
-                    </div>
+                    {{-- <div>
+                    <i class="fa fa-fw fa-clock"></i>
+                    @include('events.shared.event_dates')
+                    </div> --}}
                     <div>
                         <i class="fa fa-fw fa-location-pin"></i>
                         {{ $service->location->nameOrAddress }}
@@ -31,12 +30,13 @@
                     @if ($showVisibility)
                         <div>
                             <i class="fa fa-fw fa-eye" title="{{ __('Visibility') }}"></i>
-                            <x-badge.visibility :visibility="$service->visibility"/>
+                            <x-badge.visibility :visibility="$service->visibility" />
                         </div>
                     @endif
                     <div class="text-muted">
                         {{ $service->description }}
                     </div>
+                    <a href="{{ route('chats.index', $service->id) }}" class="btn btn-success">{{ __('Chat') }}</a>
                 </a>
             @endcan
         @endforeach

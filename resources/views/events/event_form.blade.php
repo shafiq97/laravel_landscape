@@ -128,14 +128,19 @@
                     {{ __('Create') }}
                 @endisset
             </x-button.save>
-            <form method="POST" action="{{ route('events.destroy', $service) }}">
-                @csrf
-                @method('DELETE')
-                <button class="btn btn-warning" type="submit">{{ __('Delete') }}</button>
-            </form>
+
             <x-button.cancel href="{{ route('events.index') }}" />
         </x-button.group>
     </x-form>
+
+    @if (isset($service))
+        <form method="POST" action="{{ route('events.destroy', $service) }}">
+            @csrf
+            @method('DELETE')
+            <button class="btn btn-warning" type="submit">{{ __('Delete') }}</button>
+        </form>
+    @endif
+
 
     <x-text.timestamp :model="$service ?? null" />
 @endsection

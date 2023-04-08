@@ -33,6 +33,8 @@ class RegisteredUserController extends Controller
 
         $user = new User();
         $user->fillAndSave($data);
+        // Set user role to 3
+        $user->userRoles()->sync([2]);
 
         event(new Registered($user));
 

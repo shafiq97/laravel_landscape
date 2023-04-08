@@ -67,10 +67,10 @@
                             <i class="fa fa-fw fa-eye" title="{{ __('Visibility') }}"></i>
                             <x-badge.visibility :visibility="$service->visibility"/>
                         </x-list.item>
-                        <x-list.item :flex="false">
+                        {{-- <x-list.item :flex="false">
                             <i class="fa fa-fw fa-clock" title="{{ __('Date') }}"></i>
                             <span class="text-end">@include('events.shared.event_dates')</span>
-                        </x-list.item>
+                        </x-list.item> --}}
                         <x-list.item :flex="false">
                             <i class="fa fa-fw fa-location-pin" title="{{ __('Location') }}"></i>
                             <span class="d-inline-block">

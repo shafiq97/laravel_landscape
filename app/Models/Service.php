@@ -19,6 +19,7 @@ use Spatie\QueryBuilder\AllowedFilter;
 /**
  * @property-read int $id
  * @property string $name
+ * @property int $user_id
  * @property string $slug
  * @property string $image
  * @property ?string $description
@@ -56,7 +57,8 @@ class Service extends Model
         'started_at',
         'finished_at',
         'website_url',
-        'image'
+        'image',
+        'user_id'
     ];
 
     /**

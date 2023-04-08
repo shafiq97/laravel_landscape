@@ -39,6 +39,7 @@ class Booking extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'id',
         'first_name',
         'last_name',
         'email',
@@ -162,5 +163,10 @@ class Booking extends Model
             /** @see self::scopePaymentStatus() */
             AllowedFilter::scope('payment_status', 'paymentStatus'),
         ];
+    }
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
     }
 }

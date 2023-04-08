@@ -12,6 +12,7 @@ use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\PersonalAccessTokenController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserRoleController;
+use App\Http\Controllers\ChatController;
 use App\Models\Booking;
 use App\Models\BookingOption;
 use App\Models\Service;
@@ -103,5 +104,10 @@ Route::resource('events/{event:slug}/booking-options', BookingOptionController::
 
 Route::resource('events/{event:slug}/{booking_option:slug}/bookings', BookingController::class)
      ->only(['store']);
+
+Route::post('/reviews', 'App\Http\Controllers\ReviewController@store')->name('reviews.store');
+
+Route::get('/services/{service}/chat', [App\Http\Controllers\ChatController::class, 'index'])->name('services.chat');
+Route::get('/chats/create', [App\Http\Controllers\ChatController::class, 'index'])->name('chats.index');
 
 require __DIR__ . '/auth.php';

@@ -48,7 +48,7 @@
                                 <a id="navbarAdminDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fa fa-wrench"></i>
-                                    {{ __('Lanscaper Setting') }}
+                                    {{ __('Setting') }}
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarAdminDropdown">
                                     @if($canViewEvents)

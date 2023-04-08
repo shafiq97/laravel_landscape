@@ -39,6 +39,7 @@ class AuthServiceProvider extends ServiceProvider
         PersonalAccessToken::class => PersonalAccessTokenPolicy::class,
         User::class => UserPolicy::class,
         UserRole::class => UserRolePolicy::class,
+        Review::class => ReviewPolicy::class,
     ];
 
     /**

@@ -10,6 +10,7 @@ use App\Models\Location;
 use App\Models\Organization;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
@@ -19,22 +20,31 @@ class EventController extends Controller
     public function index(EventFilterRequest $request): View
     {
         $this->authorize('viewAny', Service::class);
-
+    
+        $services = Service::filter()
+            ->with([
+                'bookingOptions' => static fn(HasMany $query) => $query->withCount([
+                    'bookings',
+                ]),
+                'eventSeries',
+                'location',
+                'organizations',
+                'parentEvent',
+            ]);
+    
+        /** @var ?\App\Models\User $user */
+        $user = Auth::user();
+        if ($user !== null && $user->userRoles()->pluck('name')->contains('Landscaper')) {
+            $services = $services->where('user_id', $user->id);
+        }
+    
+        $services = $services->paginate();
+    
         return view('events.event_index', $this->formValuesForFilter([
-            'services' => Service::filter()
-                ->with([
-                    'bookingOptions' => static fn(HasMany $query) => $query->withCount([
-                        'bookings',
-                    ]),
-                    'eventSeries',
-                    'location',
-                    'organizations',
-                    'parentEvent',
-                ])
-                ->paginate(),
-
+            'services' => $services,
         ]));
     }
+    
 
     public function destroy(Service $service): RedirectResponse
     {
@@ -78,6 +88,7 @@ class EventController extends Controller
         }
 
         $service = new Service();
+        $service->user_id = Auth::id(); // Set the user_id of the current user
         if ($service->fillAndSave($request->validated())) {
             Session::flash('success', __('Created successfully.'));
             return redirect(route('events.edit', $service));

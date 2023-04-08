@@ -14,13 +14,6 @@
                     {{ __('Register') }}
                 </a>
             </div>
-            <div class="alert alert-primary mb-3">
-                {{ __('Landscaper?') }}
-
-                <a class="alert-link" href="{{ route('register2') }}">
-                    {{ __('Register for landscaper') }}
-                </a>
-            </div>
         @endif
 
         <x-form method="POST" action="{{ route('login') }}">

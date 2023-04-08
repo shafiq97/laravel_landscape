@@ -29,23 +29,25 @@
                 'showVisibility' => false,
             ])
         </div>
+        {{-- @if (Auth::user() && null !== Auth::user()->userRoles && count(Auth::user()->userRoles) > 0 && Auth::user()->userRoles[0]->name == 'User' && $bookings !== null) --}}
         @if (Auth::user() &&
                 null !== Auth::user()->userRoles &&
+                count(Auth::user()->userRoles) > 0 &&
                 Auth::user()->userRoles[0]->name == 'User' &&
                 $bookings !== null)
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-6" style="margin-bottom: 20px">
                 <h2>{{ __('My bookings') }}</h2>
                 @foreach ($bookings as $booking)
                     @php
                         $service = $booking->bookingOption->event;
                     @endphp
-                    <div class="list-group">
+                    <div class="list-group" style="margin-bottom: 20px">
                         <a href="{{ route('bookings.show', $booking) }}" class="list-group-item list-group-item-action">
                             <strong>{{ $service->name }}</strong>
-                            <div>
+                            {{-- <div>
                                 <i class="fa fa-fw fa-clock"></i>
                                 @include('events.shared.event_dates')
-                            </div>
+                            </div> --}}
                             <div>
                                 <i class="fa fa-fw fa-location-pin"></i>
                                 {{ $service->location->nameOrAddress }}
@@ -73,6 +75,38 @@
                             </div>
                         </a>
                     </div>
+                    @if ($booking->reviews()->count() > 0)
+                        <div class="form-group">
+                            <label for="existing_rating">{{ __('Your rating') }}</label>
+                            <input disabled type="text" class="form-control" id="existing_rating" name="existing_rating"
+                                value="{{ $booking->reviews()->first()->rating }}" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="existing_comment">{{ __('Your comment') }}</label>
+                            <textarea disabled class="form-control" id="existing_comment" name="existing_comment" rows="3" readonly>{{ $booking->reviews()->first()->comment }}</textarea>
+                        </div>
+                        <hr style="border: 1px red solid">
+                    @else
+                        @isset($booking->paid_at)
+                            <form action="{{ route('reviews.store') }}" method="POST" style="margin-bottom: 20px">
+                                @csrf
+                                <input type="hidden" name="booking_id" value="{{ $booking->id }}">
+                                <div class="form-group">
+                                    <label for="comment">{{ __('Review') }}</label>
+                                    <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="rating">{{ __('Rating') }}</label>
+                                    <input type="number" class="form-control" id="rating" name="rating" min="1"
+                                        max="5" required>
+                                </div>
+                                <div class="form-group" style="margin-top: 10px">
+                                    <button type="submit" class="btn btn-primary">{{ __('Submit') }}</button>
+                                </div>
+                            </form>
+                            <hr style="border: 1px red solid">
+                        @endisset
+                    @endif
                 @endforeach
             </div>
         @endif

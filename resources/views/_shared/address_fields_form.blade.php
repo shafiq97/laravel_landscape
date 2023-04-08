@@ -11,7 +11,7 @@
     </div>
     <div class="col-12 col-md-4">
         <x-form.row>
-            <x-form.label for="house_number">{{ __('Premise Number') }}</x-form.label>
+            <x-form.label for="house_number">{{ __('House Number') }}</x-form.label>
             <x-form.input name="house_number" type="text"
                           :value="$address->house_number ?? null" />
         </x-form.row>

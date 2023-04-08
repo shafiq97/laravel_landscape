@@ -153,6 +153,16 @@
                     <x-form.input readonly disabled name="country"
                                   value="{{ $booking->country ?? null }}" />
                 </x-form.row>
+                <x-form.row>
+                    <x-form.label for="reviews">{{ __('Review') }}</x-form.label>
+                    <x-form.input readonly disabled name="review"
+                                  value="{{ $booking->reviews()->first()->comment ?? null }}" />
+                </x-form.row>
+                <x-form.row>
+                    <x-form.label for="rating">{{ __('Rating') }}</x-form.label>
+                    <x-form.input readonly disabled name="rating"
+                                  value="{{ $booking->reviews()->first()->rating ?? null }}" />
+                </x-form.row>
             @endisset
         </div>
     </div>
