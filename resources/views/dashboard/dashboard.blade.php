@@ -14,7 +14,8 @@
         <div class="col-12">
             <form action="{{ route('dashboard') }}" method="GET">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" name="q" placeholder="{{ __('Search services...') }}">
+                    <input type="text" class="form-control" name="q"
+                        placeholder="{{ __('Search by services, description and landscaper') }}">
                     <button class="btn btn-primary" type="submit">{{ __('Search') }}</button>
                 </div>
             </form>
@@ -91,6 +92,7 @@
                             <form action="{{ route('reviews.store') }}" method="POST" style="margin-bottom: 20px">
                                 @csrf
                                 <input type="hidden" name="booking_id" value="{{ $booking->id }}">
+                                <input type="hidden" name="service_id" value="{{ $service->id }}">
                                 <div class="form-group">
                                     <label for="comment">{{ __('Review') }}</label>
                                     <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>

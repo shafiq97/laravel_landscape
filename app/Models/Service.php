@@ -58,7 +58,8 @@ class Service extends Model
         'finished_at',
         'website_url',
         'image',
-        'user_id'
+        'user_id',
+        'service_rating'
     ];
 
     /**
@@ -111,8 +112,8 @@ class Service extends Model
         $this->parentEvent()->associate($validatedData['parent_event_id'] ?? null);
 
         if (isset($validatedData['image'])) {
-            $image = $validatedData['image'];
-            $filename = $image->storePublicly('landscape', 'public');
+            $image       = $validatedData['image'];
+            $filename    = $image->storePublicly('landscape', 'public');
             $this->image = $filename;
         }
 
@@ -129,4 +130,10 @@ class Service extends Model
             AllowedFilter::exact('organization_id', 'organizations.id'),
         ];
     }
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class, 'service_id');
+    }
+
 }

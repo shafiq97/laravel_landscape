@@ -8,6 +8,7 @@ use App\Models\Service;
 use App\Models\ServiceSeries;
 use App\Models\Location;
 use App\Models\Organization;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -30,6 +31,7 @@ class EventController extends Controller
                 'location',
                 'organizations',
                 'parentEvent',
+                'user' => static fn(BelongsTo $query) => $query->select('id', 'name'),
             ]);
     
         /** @var ?\App\Models\User $user */

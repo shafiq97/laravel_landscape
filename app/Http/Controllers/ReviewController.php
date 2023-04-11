@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Booking;
 use App\Models\Review;
+use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,9 +21,14 @@ class ReviewController extends Controller
     public function store(Request $request)
     {
         $bookingId = $request->input('booking_id');
+        $serviceId = $request->input('service_id');
         $booking   = Booking::findOrFail($bookingId);
+        $service   = Service::findOrFail($serviceId);
         if (!$booking) {
             return redirect()->back()->with('error', __('Booking not found.'));
+        }
+        if (!$service) {
+            return redirect()->back()->with('error', __('Service not found.'));
         }
 
         $request->validate([
@@ -48,12 +54,14 @@ class ReviewController extends Controller
         // Create the review
         $review = new Review([
             'booking_id' => $booking->id,
+            'service_id' => $service->id,
             'rating' => $request->input('rating'),
             'comment' => $request->input('comment'),
         ]);
 
         // Associate the review with the booking and the user
         $review->booking()->associate($booking);
+        $review->service()->associate($service);
         $review->user()->associate(Auth::user());
 
         $review->save();

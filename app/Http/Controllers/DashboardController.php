@@ -8,6 +8,8 @@ use App\Options\Visibility;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
@@ -20,17 +22,29 @@ class DashboardController extends Controller
         //     ->orderBy('started_at')
         //     ->limit(10)
         //     ->get();
-        $services = Service::query();
+        $services = Service::query()
+            ->leftJoin('reviews', 'services.id', '=', 'reviews.service_id')
+            ->where('services.visibility', '=', Visibility::Public ->value)
+            ->selectRaw('services.*, AVG(reviews.rating) as service_rating')
+            ->groupBy('services.id');
 
-        if ($request->has('q')) {
+        $services->when($request->has('q'), function ($query) use ($request) {
             $q = $request->input('q');
-            $services->where('name', 'like', "%$q%")
-                ->orWhere('description', 'like', "%$q%");
-                $events = $services->get();
-        }else{
-            $events = Service::query()
-            ->where('visibility', '=', Visibility::Public ->value)
-            ->get();
+            $query->join('users', 'services.user_id', '=', 'users.id')
+                ->where('users.first_name', 'like', "%$q%")
+                ->orWhere('services.name', 'like', "%$q%")
+                ->orWhere('services.description', 'like', "%$q%")
+                ->select('services.*', 'users.first_name as user_name');
+        })
+            ->leftJoin('users', 'services.user_id', '=', 'users.id')
+            ->select('services.*', 'users.first_name as user_name', DB::raw('COALESCE(AVG(reviews.rating), 0) as service_rating'))
+            ->groupBy('services.id');
+
+        $events = $services->get();
+
+
+        foreach ($events as $service) {
+            Log::info($service->service_rating);
         }
 
 

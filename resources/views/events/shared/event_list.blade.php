@@ -15,7 +15,15 @@
         @foreach ($events as $service)
             @can('view', $service)
                 <a href="{{ route('events.show', $service->slug) }}" class="list-group-item list-group-item-action">
-                    <strong>{{ $service->name }}</strong>
+                    <div class="row">
+                        <div class="col">
+                            <strong>{{ $service->name }}</strong> by Landscaper
+                            <strong>{{ $service->user_name }}</strong>
+                        </div>
+                        <div style="text-align: right" class="col">
+                            <span class="">{{ $service->service_rating }}</span>
+                        </div>
+                    </div>
                     <div>
                         <img src="{{ asset('storage/' . $service->image) }}" width="200" alt="Image">
                     </div>
@@ -36,7 +44,7 @@
                     <div class="text-muted">
                         {{ $service->description }}
                     </div>
-                    <a href="{{ route('chats.index', $service->id) }}" class="btn btn-success">{{ __('Chat') }}</a>
+                    {{-- <a href="{{ route('chats.index', $service->id) }}" class="btn btn-success">{{ __('Chat') }}</a> --}}
                 </a>
             @endcan
         @endforeach
