@@ -14,16 +14,24 @@
     <div class="list-group">
         @foreach ($events as $service)
             @can('view', $service)
-                <a href="{{ route('events.show', $service->slug) }}" class="list-group-item list-group-item-action">
+                <div class="row mb-1">
+                    <span>{{ $service->name }} by Landscaper <a
+                            href="{{ route('landscaper_profile.index', ['user_id' => $service->user_id, 'user_name' => $service->user_name]) }}">{{ $service->user_name }}</a></span>
+                </div>
+                <a href="{{ route('events.show', $service->slug) }}" class="list-group-item list-group-item-action"
+                    style="margin-bottom: 20px;">
                     <div class="row">
-                        <div class="col">
-                            <strong>{{ $service->name }}</strong> by Landscaper
-                            <strong>{{ $service->user_name }}</strong>
-                        </div>
+                        {{-- <div class="col">
+                            <strong>{{ $service->name }}</strong><span> by Landscaper</span>
+                            {{ $service->user_name }}
+                        </div> --}}
                         <div style="text-align: right" class="col">
-                            <span class="">{{ $service->service_rating }}</span>
+                            <div>
+                                {{ number_format($service->service_rating, 1) }}
+                            </div>
                         </div>
                     </div>
+
                     <div>
                         <img src="{{ asset('storage/' . $service->image) }}" width="200" alt="Image">
                     </div>
@@ -44,6 +52,10 @@
                     <div class="text-muted">
                         {{ $service->description }}
                     </div>
+                    <div class="text-muted">
+                        Price from RM{{ $service->min_price }}
+                    </div>
+
                     {{-- <a href="{{ route('chats.index', $service->id) }}" class="btn btn-success">{{ __('Chat') }}</a> --}}
                 </a>
             @endcan

@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventSeriesController;
 use App\Http\Controllers\FormController;
+use App\Http\Controllers\LandscaperProfileController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\PersonalAccessTokenController;
@@ -107,7 +108,12 @@ Route::resource('events/{event:slug}/{booking_option:slug}/bookings', BookingCon
 
 Route::post('/reviews', 'App\Http\Controllers\ReviewController@store')->name('reviews.store');
 
-Route::get('/services/{service}/chat', [App\Http\Controllers\ChatController::class, 'index'])->name('services.chat');
 Route::get('/chats/create', [App\Http\Controllers\ChatController::class, 'index'])->name('chats.index');
+Route::post('/chats', [App\Http\Controllers\ChatController::class, 'store'])->name('chats.store');
+Route::get('/chat/history', [ChatController::class, 'history'])->name('chats.history');
+
+Route::get('/landscaper_profile', [LandscaperProfileController::class, 'index'])->name('landscaper_profile.index');
+
+ 
 
 require __DIR__ . '/auth.php';

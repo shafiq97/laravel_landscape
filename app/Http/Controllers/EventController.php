@@ -31,7 +31,7 @@ class EventController extends Controller
                 'location',
                 'organizations',
                 'parentEvent',
-                'user' => static fn(BelongsTo $query) => $query->select('id', 'name'),
+                'user' => static fn(BelongsTo $query) => $query->select('id', 'first_name'),
             ]);
     
         /** @var ?\App\Models\User $user */
