@@ -19,7 +19,7 @@
                         </td>
                         <td>{{ $chat->created_at->format('d/m/Y H:i') }}</td>
                         <td><a href="{{ route('chat.landscaper', ['user_id' => $chat->user_id, 'landscaper_id' => $chat->landscaper_id, 'user_name' => $chat->first_name]) }}"
-                                class="btn btn-warning" href="">Chat</a></td>
+                                class="btn btn-warning">Chat</a></td>
                     </tr>
                 @endforeach
             </tbody>

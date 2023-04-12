@@ -12,8 +12,9 @@ class ChatController extends Controller
         $chats = Chat::select('chats.*', 'users.first_name')
             ->join('users', 'chats.landscaper_id', '=', 'users.id')
             ->where('chats.user_id', auth()->user()->id)
-            ->distinct('chats.landscaper_id')
+            ->groupBy('chats.landscaper_id')
             ->get();
+
         return view('chat.index', compact('chats'));
     }
 
@@ -27,20 +28,20 @@ class ChatController extends Controller
         return view('chat.chat', compact('chats'));
     }
 
-
-
-
-
-
     public function store(Request $request)
     {
         // Get the message from the request
-        $message = $request->input('message');
+        $message       = $request->input('message');
+        $user_id       = $request->input('user_id');
+        $landscaper_id = $request->input('landscaper_id');
+
+        // dd($request->all());
 
         // Save the message to the database
-        $chat          = new Chat;
-        $chat->message = $message;
-        $chat->user_id = 11;
+        $chat                = new Chat;
+        $chat->message       = $message;
+        $chat->user_id       = $user_id;
+        $chat->landscaper_id = $landscaper_id;
         $chat->save();
 
         return back();

@@ -8,9 +8,10 @@
         <form class="chat-form" id="chat-form" action="{{ route('chats.store') }}" method="POST">
             @csrf
             <input type="text" name="message" id="message-input" placeholder="Type your message">
+            <input type="hidden" name="user_id" value="{{ $_GET['user_id'] }}">
+            <input type="hidden" name="landscaper_id" value="{{ $_GET['landscaper_id'] }}">
             <button type="submit" id="send-btn">Send</button>
         </form>
-
     </div>
 
     <script>
@@ -55,7 +56,9 @@
             event.preventDefault(); // Prevent the form from submitting normally
 
             const message = messageInput.value; // Get the message from the input field
-
+            const urlParams = new URLSearchParams(window.location.search);
+            const user_id = urlParams.get('user_id');
+            const landscaper_id = urlParams.get('landscaper_id');
             // Create a new message element and append it to the chat messages div
             const messageDiv = document.createElement('div');
             messageDiv.classList.add('message');
@@ -72,6 +75,11 @@
 
             // Clear the input field
             messageInput.value = '';
+            const body = {
+                message: message,
+                user_id: user_id,
+                landscaper_id: landscaper_id
+            };
 
             // Send an AJAX request to save the message to the database
             fetch('/chat', {
@@ -81,9 +89,7 @@
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(
                         'content')
                 },
-                body: JSON.stringify({
-                    message: message
-                })
+                body: JSON.stringify(body)
             });
         });
 

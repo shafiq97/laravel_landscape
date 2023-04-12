@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Chat;
 use App\Models\Location;
 use App\Models\Organization;
 use App\Models\Service;
@@ -55,10 +56,24 @@ class LandscaperProfileController extends Controller
             $contact_number = $user->phone;
         }
 
+        $landscaper_id = request()->query('user_id');
+
+        // get chat
+        $chats = Chat::select('chats.*', 'users.first_name')
+            ->join('users', 'chats.landscaper_id', '=', 'users.id')
+            ->where('chats.user_id', auth()->user()->id)
+            ->where('chats.landscaper_id', $landscaper_id)
+            ->groupBy('chats.landscaper_id')
+            ->get();
+
+
         return view('landscaper_profile.landscaper_profile', $this->formValuesForFilter([
             'services' => $services,
             'services_user_name' => $request->user_name,
-            'user_contact_number' => $contact_number
+            'user_contact_number' => $contact_number,
+            'chats' => $chats,
+            'landscaper_id' => $landscaper_id,
+            'user_id' => auth()->user()->id
         ]));
     }
 

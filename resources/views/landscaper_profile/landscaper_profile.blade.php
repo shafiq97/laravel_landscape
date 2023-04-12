@@ -21,9 +21,14 @@
             </x-button.create>
         @endcan
     </x-button.group>
-    @if (Auth::check())
-        <a href="{{ route('chats.index') }}" class="btn btn-warning mb-3">Chat me!</a>
+    @if (Auth::check() && $chats->isNotEmpty())
+        <a href="{{ route('chat.landscaper', ['user_id' => $chats->first()->user_id, 'landscaper_id' => $chats->first()->landscaper_id, 'user_name' => $chats->first()->first_name]) }}"
+            class="btn btn-warning">Chat</a>
+    @elseif (Auth::check())
+        <a href="{{ route('chat.landscaper', ['user_id' => $user_id, 'landscaper_id' => $landscaper_id]) }}"
+            class="btn btn-warning">Chat</a>
     @endif
+
     <h3>Information</h3>
     <h6>
         {{ __('Contact No') }} : {{ $user_contact_number }}
