@@ -31,18 +31,18 @@
             .then(response => response.json())
             .then(data => {
                 // Display chat history in chat messages div
-                data.forEach(message => {
+                data.chats.forEach(message => {
                     const messageDiv = document.createElement('div');
                     messageDiv.classList.add('message');
                     messageDiv.innerHTML = `
-            <div class="message-header">
-                <strong>${message.user.name}</strong>
-                <span class="timestamp">${new Date(message.created_at).toLocaleTimeString()}</span>
-            </div>
-            <div class="message-body">
-                ${message.message}
-            </div>
-        `;
+        <div class="message-header">
+            <strong>${message.user_id}</strong>
+            <span class="timestamp">${new Date(message.created_at).toLocaleTimeString()}</span>
+        </div>
+        <div class="message-body">
+            ${message.message}
+        </div>
+    `;
                     chatMessages.appendChild(messageDiv);
                 });
             })
