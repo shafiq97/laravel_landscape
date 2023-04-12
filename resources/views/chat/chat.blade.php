@@ -84,10 +84,6 @@
                 console.error('Error fetching chat history:', error);
             });
 
-
-
-
-
         // Listen for the form submit event
         chatForm.addEventListener('submit', (event) => {
             event.preventDefault(); // Prevent the form from submitting normally
