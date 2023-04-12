@@ -15,8 +15,8 @@
         @foreach ($events as $service)
             @can('view', $service)
                 <div class="row mb-1">
-                    <span>{{ $service->name }} by Landscaper <a
-                            href="{{ route('landscaper_profile.index', ['user_id' => $service->user_id, 'user_name' => $service->user_name]) }}">{{ $service->user_name }}</a></span>
+                    <span>{{ $service->name }} by Landscaper
+                        <a href="{{ route('landscaper_profile.index', ['user_id' => $service->user_id, 'user_name' => $service->user_name]) }}">{{ $service->user_name }}</a></span>
                 </div>
                 <a href="{{ route('events.show', $service->slug) }}" class="list-group-item list-group-item-action"
                     style="margin-bottom: 20px;">

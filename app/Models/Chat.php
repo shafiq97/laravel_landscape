@@ -13,6 +13,7 @@ class Chat extends Model
         'message',
         'user_id',
         'service_id',
+        'landscaper_id',
     ];
 
     public function user()

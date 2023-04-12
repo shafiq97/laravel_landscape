@@ -9,9 +9,28 @@ class ChatController extends Controller
 {
     public function index()
     {
-        // Your chat logic goes here
-        return view('chat.index');
+        $chats = Chat::select('chats.*', 'users.first_name')
+            ->join('users', 'chats.landscaper_id', '=', 'users.id')
+            ->where('chats.user_id', auth()->user()->id)
+            ->distinct('chats.landscaper_id')
+            ->get();
+        return view('chat.index', compact('chats'));
     }
+
+    public function chat_landscaper()
+    {
+        $chats = Chat::select('chats.*', 'users.first_name')
+            ->join('users', 'chats.landscaper_id', '=', 'users.id')
+            ->where('chats.user_id', auth()->user()->id)
+            ->distinct('chats.landscaper_id')
+            ->get();
+        return view('chat.chat', compact('chats'));
+    }
+
+
+
+
+
 
     public function store(Request $request)
     {

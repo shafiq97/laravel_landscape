@@ -114,6 +114,8 @@ Route::get('/chat/history', [ChatController::class, 'history'])->name('chats.his
 
 Route::get('/landscaper_profile', [LandscaperProfileController::class, 'index'])->name('landscaper_profile.index');
 
- 
+Route::get('/chat_center', [ChatController::class, 'index'])->name('chat.center');
+Route::get('/chat_landscaper', [ChatController::class, 'chat_landscaper'])->name('chat.landscaper');
+
 
 require __DIR__ . '/auth.php';
