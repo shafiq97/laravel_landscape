@@ -89,7 +89,8 @@
                         <hr style="border: 1px red solid">
                     @else
                         @isset($booking->paid_at)
-                            <form action="{{ route('reviews.store') }}" method="POST" style="margin-bottom: 20px">
+                            <form action="{{ route('reviews.store') }}" method="POST" style="margin-bottom: 20px"
+                                enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="booking_id" value="{{ $booking->id }}">
                                 <input type="hidden" name="service_id" value="{{ $service->id }}">
@@ -102,10 +103,15 @@
                                     <input type="number" class="form-control" id="rating" name="rating" min="1"
                                         max="5" required>
                                 </div>
+                                <div class="form-group mt-3">
+                                    <label for="image">{{ __('Image') }}</label>
+                                    <input type="file" class="form-control-file" id="image" name="image">
+                                </div>
                                 <div class="form-group" style="margin-top: 10px">
                                     <button type="submit" class="btn btn-primary">{{ __('Submit') }}</button>
                                 </div>
                             </form>
+
                             <hr style="border: 1px red solid">
                         @endisset
                     @endif

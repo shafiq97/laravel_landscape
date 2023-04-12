@@ -34,6 +34,7 @@ class ReviewController extends Controller
         $request->validate([
             'rating' => 'required|integer|between:1,5',
             'comment' => 'nullable|string|max:1000',
+            'image' => 'nullable|image|max:2048', // added validation for image upload
         ]);
 
         // Check if the user is authorized to create a review for this booking
@@ -47,9 +48,14 @@ class ReviewController extends Controller
             return redirect()->back()->with('error', __('You have already reviewed this booking.'));
         }
 
-        // Create the review
-// ...
-
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            $image     = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $imagePath = $image->storeAs('public/reviews', $imageName);
+        } else {
+            $imagePath = null;
+        }
 
         // Create the review
         $review = new Review([
@@ -57,6 +63,7 @@ class ReviewController extends Controller
             'service_id' => $service->id,
             'rating' => $request->input('rating'),
             'comment' => $request->input('comment'),
+            'image_path' => $imagePath, // store the image path in the database
         ]);
 
         // Associate the review with the booking and the user
@@ -68,4 +75,5 @@ class ReviewController extends Controller
 
         return redirect()->route('bookings.show', $booking)->with('success', __('Your review has been saved.'));
     }
+
 }

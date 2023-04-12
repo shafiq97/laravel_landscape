@@ -13,6 +13,7 @@ class Review extends Model
         'booking_id',
         'rating',
         'comment',
+        'image_path'
     ];
 
     public function booking()

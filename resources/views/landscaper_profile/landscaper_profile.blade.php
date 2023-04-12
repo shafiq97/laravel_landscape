@@ -21,7 +21,9 @@
             </x-button.create>
         @endcan
     </x-button.group>
-    <a href="{{ route('chats.index') }}" class="btn btn-warning mb-3">Chat me!</a>
+    @if (Auth::check())
+        <a href="{{ route('chats.index') }}" class="btn btn-warning mb-3">Chat me!</a>
+    @endif
     <h3>Information</h3>
     <h6>
         {{ __('Contact No') }} : {{ $user_contact_number }}
@@ -44,6 +46,7 @@
                         <th>Rating</th>
                         <th>Comment</th>
                         <th>Reviewed by</th>
+                        <th>Image</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -54,6 +57,9 @@
                                     <td>{{ $review->rating }} / 5</td>
                                     <td>{{ $review->comment }}</td>
                                     <td>{{ $review->user->first_name }}</td>
+                                    <td class="text-align: center;">
+                                        <img src="{{ Storage::url($review->image_path) }}" width="200" alt="Image">
+                                    </td>
                                 </tr>
                             @endforeach
                         @else
