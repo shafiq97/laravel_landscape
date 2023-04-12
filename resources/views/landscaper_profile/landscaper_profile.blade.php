@@ -29,11 +29,8 @@
         {{ __('Contact No') }} : {{ $user_contact_number }}
     </h6>
     <h6>
-        {{ __('Provided Area') }} : {{ $user_contact_number }}
-    </h6>
-    <h6>
         Provided Area
-        @foreach ($services as $service)
+        @foreach ($services->unique('location_name') as $service)
             <p>{{ $service->location_name }}</p>
         @endforeach
     </h6>
