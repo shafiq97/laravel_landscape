@@ -1,5 +1,35 @@
 @extends('layouts.app')
+<style>
+    .message-body {
+        word-wrap: break-word;
+    }
 
+    .message-container {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .message {
+        display: flex;
+        flex-direction: column;
+        margin: 10px;
+        padding: 10px;
+        max-width: 50%;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    .message.sent {
+        align-self: flex-end;
+        background-color: #dcf8c6;
+    }
+
+    .message.received {
+        align-self: flex-start;
+        background-color: #fff;
+    }
+</style>
 @section('content')
     <div class="chat-container">
         <div class="chat-messages" id="chat-messages">
@@ -30,25 +60,32 @@
             })
             .then(response => response.json())
             .then(data => {
+                // Get logged-in user ID
+                const userId = {{ auth()->user()->id }}; // <-- get the currently logged-in user ID
                 // Display chat history in chat messages div
                 data.chats.forEach(message => {
+                    console.log(message.user_id);
                     const messageDiv = document.createElement('div');
                     messageDiv.classList.add('message');
+                    messageDiv.classList.add(message.user_id === userId ? 'sent' : 'received');
                     messageDiv.innerHTML = `
-        <div class="message-header">
-            <strong>${message.user_id}</strong>
-            <span class="timestamp">${new Date(message.created_at).toLocaleTimeString()}</span>
-        </div>
-        <div class="message-body">
-            ${message.message}
-        </div>
-    `;
+            <div class="message-header">
+                <strong>${message.user_id == userId ? 'You' : message.first_name}</strong>
+                <span class="timestamp">${new Date(message.created_at).toLocaleTimeString()}</span>
+            </div>
+            <div class="message-body">
+                ${message.message}
+            </div>
+        `;
                     chatMessages.appendChild(messageDiv);
                 });
             })
             .catch(error => {
                 console.error('Error fetching chat history:', error);
             });
+
+
+
 
 
         // Listen for the form submit event

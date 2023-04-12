@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Chat;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ChatController extends Controller
 {
@@ -49,11 +50,17 @@ class ChatController extends Controller
 
     public function history()
     {
-        // Retrieve the chat history from the database
-        $chats = Chat::all()->toArray();
+        // Retrieve the chat history along with the user information for the landscaper
+        $chats = DB::table('chats')
+            ->join('users', 'chats.user_id', '=', 'users.id')
+            ->select('chats.*', 'users.first_name')
+            ->get()
+            ->toArray();
+
         // Return the chat history as a JSON response
         return response()->json([
             'chats' => $chats
         ]);
     }
+
 }
