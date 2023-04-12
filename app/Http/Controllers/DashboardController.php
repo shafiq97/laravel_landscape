@@ -33,7 +33,8 @@ class DashboardController extends Controller
     
         $services->when($request->has('q'), function ($query) use ($request) {
             $q = $request->input('q');
-            $query->join('users', 'services.user_id', '=', 'users.id')
+            $query
+                // ->join('users', 'services.user_id', '=', 'users.id')
                 ->where('users.first_name', 'like', "%$q%")
                 ->orWhere('services.name', 'like', "%$q%")
                 ->orWhere('services.description', 'like', "%$q%")
