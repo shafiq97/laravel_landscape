@@ -143,5 +143,9 @@
         sendBtn.addEventListener('click', () => {
             chatForm.submit();
         });
+
+        setInterval(() => {
+            window.location.reload();
+        }, 10000); // Reload every 10 seconds (10000 milliseconds)
     </script>
 @endsection
