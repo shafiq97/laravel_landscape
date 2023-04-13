@@ -23,19 +23,19 @@
     </div>
 
     <div class="row">
-        <div class="col-12 col-md-12">
+        {{-- <div class="col-12 col-md-12">
             <h2>{{ __('Landscape Service List') }}</h2>
             @include('events.shared.event_list', [
                 'events' => $events,
                 'showVisibility' => false,
             ])
-        </div>
+        </div> --}}
         @if (Auth::user() &&
                 null !== Auth::user()->userRoles &&
                 count(Auth::user()->userRoles) > 0 &&
                 Auth::user()->userRoles[0]->name == 'User' &&
                 $bookings !== null)
-            {{-- <div class="col-12 col-md-6" style="margin-bottom: 20px">
+            <div class="col-12 col-md-6" style="margin-bottom: 20px">
                 <h2>{{ __('My bookings') }}</h2>
                 @foreach ($bookings as $booking)
                     @php
@@ -81,6 +81,12 @@
                             <label for="existing_comment">{{ __('Your comment') }}</label>
                             <textarea disabled class="form-control" id="existing_comment" name="existing_comment" rows="3" readonly>{{ $booking->reviews()->first()->comment }}</textarea>
                         </div>
+                        <div class="form-group">
+                            <label>{{ __('Photo') }}</label>
+                            <p class="text-align: center;">
+                                <img src="{{ Storage::url($booking->reviews()->first()->image_path) }}" width="200" alt="Image">
+                            </p>
+                        </div>
                         <hr style="border: 1px red solid">
                     @else
                         @isset($booking->paid_at)
@@ -105,13 +111,14 @@
                                 <div class="form-group" style="margin-top: 10px">
                                     <button type="submit" class="btn btn-primary">{{ __('Submit') }}</button>
                                 </div>
+                                
                             </form>
 
                             <hr style="border: 1px red solid">
                         @endisset
                     @endif
                 @endforeach
-            </div> --}}
+            </div>
         @endif
     </div>
 @endsection

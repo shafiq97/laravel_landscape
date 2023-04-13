@@ -90,7 +90,8 @@ Route::get('/', [DashboardController::class, 'index'])
      ->name('dashboard');
 Route::get('/home', [HomeController::class, 'index'])
      ->name('home');
-
+Route::get('/dashboard_bookings', [DashboardController::class, 'booking_index'])
+     ->name('dashboard.bookings');
 Route::get('/register2', [RegisterController::class, 'showRegistrationForm2'])->name('register2');
 Route::post('/register2', [RegisterController::class, 'register2']);
 
@@ -110,7 +111,7 @@ Route::post('/reviews', 'App\Http\Controllers\ReviewController@store')->name('re
 
 Route::get('/chats/create', [App\Http\Controllers\ChatController::class, 'index'])->name('chats.index');
 Route::post('/chats', [App\Http\Controllers\ChatController::class, 'store'])->name('chats.store');
-Route::get('/chat/history', [ChatController::class, 'history'])->name('chats.history');
+Route::get('/chat/history/{landscaper_id}', [ChatController::class, 'history'])->name('chats.history');
 
 Route::get('/landscaper_profile', [LandscaperProfileController::class, 'index'])->name('landscaper_profile.index');
 

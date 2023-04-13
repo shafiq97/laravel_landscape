@@ -21,11 +21,16 @@ class ChatController extends Controller
 
     public function chat_landscaper()
     {
-        $chats = Chat::select('chats.*', 'users.first_name')
+        $userId       = auth()->user()->id;
+        $landscaperId = request()->input("lanscaper_id");
+
+        $chats = DB::table('chats')
+            ->select(DB::raw('DISTINCT chats.*, users.first_name'))
             ->join('users', 'chats.landscaper_id', '=', 'users.id')
-            ->where('chats.user_id', auth()->user()->id)
-            ->distinct('chats.landscaper_id')
+            ->where('chats.user_id', '=', $userId)
+            ->where('chats.landscaper_id', '=', 11)
             ->get();
+
         return view('chat.chat', compact('chats'));
     }
 
@@ -48,14 +53,21 @@ class ChatController extends Controller
         return back();
     }
 
-    public function history()
+    public function history($landscaper_id)
     {
         // Retrieve the chat history along with the user information for the landscaper
-        $chats = DB::table('chats')
-            ->join('users', 'chats.user_id', '=', 'users.id')
-            ->select('chats.*', 'users.first_name')
-            ->get()
-            ->toArray();
+        $userId = auth()->user()->id; // Get the ID of the currently logged-in user
+
+        $chats = DB::select(
+            DB::raw("SELECT DISTINCT `chats`.*, `users`.`first_name` 
+        FROM `chats` 
+        INNER JOIN `users` ON `chats`.`landscaper_id` = `users`.`id` 
+        WHERE `chats`.`user_id` = $userId AND `chats`.`landscaper_id` = $landscaper_id
+        OR `chats`.`user_id` = $landscaper_id AND `chats`.`landscaper_id` = $userId
+        ORDER BY `chats`.`created_at`")
+        );
+
+
 
         // Return the chat history as a JSON response
         return response()->json([

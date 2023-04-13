@@ -4,6 +4,12 @@
         word-wrap: break-word;
     }
 
+    .chat-messages {
+        overflow-y: auto;
+        height: 500px;
+        max-height: 500px;
+    }
+
     .message-container {
         display: flex;
         flex-direction: column;
@@ -32,6 +38,7 @@
 </style>
 @section('content')
     <div class="chat-container">
+        <h1></h1>
         <div class="chat-messages" id="chat-messages">
             <!-- Existing messages will be displayed here -->
         </div>
@@ -50,10 +57,16 @@
         const messageInput = document.getElementById('message-input');
         const chatMessages = document.getElementById('chat-messages');
         const sendBtn = document.getElementById('send-btn');
+        const params = new URLSearchParams(window.location.search);
+        const landscaperId = params.get('landscaper_id');
+        const userName = params.get('user_name');
 
+        // Update the heading element to display the name
+        const heading = document.querySelector('h1');
+        heading.textContent = `Chat with ${userName}`;
         // Load the chat history
         // Fetch chat history
-        fetch('/chat/history', {
+        fetch(`/chat/history/${landscaperId}`, {
                 headers: {
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                 }
@@ -70,7 +83,7 @@
                     messageDiv.classList.add(message.user_id === userId ? 'sent' : 'received');
                     messageDiv.innerHTML = `
             <div class="message-header">
-                <strong>${message.user_id == userId ? 'You' : message.first_name}</strong>
+                <strong>${message.user_id == userId ? 'You' : ''}</strong>
                 <span class="timestamp">${new Date(message.created_at).toLocaleTimeString()}</span>
             </div>
             <div class="message-body">
