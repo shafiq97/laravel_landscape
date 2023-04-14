@@ -26,10 +26,14 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         /** @var User $user */
-        $user = Auth::user();
+        $user                = Auth::user();
         $user->last_login_at = Carbon::now();
-        $user->timestamps = false; // Don't change updated_at column.
+        $user->timestamps    = false; // Don't change updated_at column.
         $user->save();
+
+        if ($user->userRoles()->pluck('name')->contains('Landscaper')) {
+            return redirect()->intended(RouteServiceProvider::LANDSCAPER_HOME);
+        }
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }

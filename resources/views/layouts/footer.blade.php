@@ -76,7 +76,7 @@
                             @endphp
                             <div class="row">
                                 @if ($canViewEvents)
-                                    <a class="" href="{{ route('dashboard') }}">
+                                    <a class="" href="{{ route('dashboard.landscaper_report') }}">
                                         <i class="fa fa-home"></i>
                                         {{ __('Dashboard') }}
                                     </a>
@@ -84,7 +84,7 @@
                                         <i class="fa fa-star"></i>
                                         {{ __('Review') }}
                                     </a>
-                                    <a class="" href="{{ route('dashboard') }}">
+                                    <a class="" href="{{ route('dashboard.landscaper') }}">
                                         <i class="fa fa-book"></i>
                                         {{ __('Bookings') }}
                                     </a>

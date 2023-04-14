@@ -6,7 +6,7 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Landscaper</th>
+                    <th>User</th>
                     <th>Date</th>
                     <th>Chat</th>
                 </tr>

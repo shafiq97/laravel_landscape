@@ -6,6 +6,7 @@ use App\Exports\BookingsExportSpreadsheet;
 use App\Http\Requests\Filters\BookingFilterRequest;
 use App\Models\Booking;
 use App\Models\BookingOption;
+use App\Models\Chat;
 use App\Models\Service;
 use App\Models\User;
 use App\Options\Visibility;
@@ -163,6 +164,99 @@ class DashboardController extends Controller
             'service' => $service,
             'bookingOption' => $bookingOption,
             'bookings' => $bookingsQuery->paginate(),
+        ]);
+    }
+
+
+    public function landscaper_report(
+        Service $service,
+        BookingOption $bookingOption,
+        BookingFilterRequest $request
+    ): StreamedResponse|View {
+        $bookingOption->load([
+            'form.formFieldGroups.formFields',
+        ]);
+
+
+        $loggedInUserId = auth()->user()->id;
+
+        $total_sales = Booking::filter()
+            ->join('services', 'bookings.service_id', '=', 'services.id')
+            ->where('services.user_id', $loggedInUserId)
+            ->with([
+                'bookedByUser',
+            ])
+            ->selectRaw('SUM(price) as total_sales')
+            ->first();
+
+        $total_accepted = Booking::filter()
+            ->join('services', 'bookings.service_id', '=', 'services.id')
+            ->where('services.user_id', $loggedInUserId)
+            ->whereNotNull('paid_at')
+            ->with([
+                'bookedByUser',
+            ])
+            ->selectRaw('COUNT(*) as total_accepted')
+            ->first();
+
+        $total_decline = Booking::filter()
+            ->join('services', 'bookings.service_id', '=', 'services.id')
+            ->where('services.user_id', $loggedInUserId)
+            ->whereNull('paid_at')
+            ->with([
+                'bookedByUser',
+            ])
+            ->selectRaw('COUNT(*) as total_decline')
+            ->first();
+
+
+        $services = Service::query()
+            ->leftJoin('reviews', 'services.id', '=', 'reviews.service_id')
+            ->leftJoin(DB::raw('(SELECT event_id, MIN(price) AS min_price FROM booking_options GROUP BY event_id) AS bo'), 'services.id', '=', 'bo.event_id')
+            ->leftJoin('users', 'services.user_id', '=', 'users.id')
+            ->leftJoin('users as reviewer', 'reviews.user_id', '=', 'reviewer.id')
+            ->where('services.visibility', '=', Visibility::Public ->value)
+            ->select('services.*', 'users.first_name', DB::raw('COALESCE(AVG(reviews.rating), 0) as service_rating'), 'bo.min_price', DB::raw('reviewer.first_name as reviewer_first_name'))
+            ->whereNotNull('reviewer.first_name')
+            ->groupBy('services.id')
+            ->get();
+
+
+        // dd($service->service_rating);
+        $total = 0;
+        foreach ($services as $service) {
+            $total = $total + $service->service_rating;
+        }
+        $count      = $services->count();
+        $avg_rating = $total / $count;
+
+        // dd($avg_rating);
+
+        $chats = Chat::select('chats.*', 'users.first_name')
+            ->join('users', 'chats.landscaper_id', '=', 'users.id')
+            ->where('chats.user_id', auth()->user()->id)
+            ->groupBy('chats.landscaper_id')
+            ->get();
+
+        $bookings = Booking::filter()
+            ->join('services', 'bookings.service_id', '=', 'services.id')
+            ->where('services.user_id', $loggedInUserId)
+            ->with([
+                'bookedByUser',
+            ])
+            ->get();
+
+
+
+        $this->authorize('viewAny', Booking::class);
+        return view('dashboard.landscaper_report', [
+            'total_decline' => $total_decline,
+            'total_accepted' => $total_accepted,
+            'total_sales' => $total_sales,
+            'avg_rating' => $avg_rating,
+            'chats' => $chats,
+            'services' => $services,
+            'bookings' => $bookings
         ]);
     }
 }
