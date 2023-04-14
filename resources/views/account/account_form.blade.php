@@ -49,11 +49,11 @@
                     <x-form.label for="password_confirmation">{{ __('Confirm password') }}</x-form.label>
                     <x-form.input name="password_confirmation" type="password" autocomplete="new-password" />
                 </x-form.row>
-                <x-form.row>
+                {{-- <x-form.row>
                     <x-form.label for="user_role_id">{{ __('User role') }}</x-form.label>
                     <x-form.input id="user_role_id" name="user_role_id[]" type="checkbox" :options="$userRoles->pluck('name', 'id')"
                         :value="isset($editedUser) ? $editedUser->userRoles->pluck('id')->toArray() : []" :valuesToInt="true" />
-                </x-form.row>
+                </x-form.row> --}}
             </div>
             <div class="col-12 col-md-6">
                 @include('_shared.address_fields_form', [

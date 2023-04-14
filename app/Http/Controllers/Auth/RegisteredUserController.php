@@ -30,11 +30,16 @@ class RegisteredUserController extends Controller
             ['status' => ActiveStatus::Active],
             $request->validated()
         );
+        // dd($request);
 
         $user = new User();
         $user->fillAndSave($data);
         // Set user role to 3
-        $user->userRoles()->sync([2]);
+        if ($request->isLandscaper) {
+            $user->userRoles()->sync([3]);
+        } else {
+            $user->userRoles()->sync([2]);
+        }
 
         event(new Registered($user));
 

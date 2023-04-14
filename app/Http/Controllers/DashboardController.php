@@ -108,7 +108,7 @@ class DashboardController extends Controller
 
         /** @var ?User $user */
         $user = Auth::user();
-        
+
         if (isset($user)) {
             $bookings = $user->bookings()
                 ->with([
@@ -137,10 +137,16 @@ class DashboardController extends Controller
             'form.formFieldGroups.formFields',
         ]);
 
+
+        $loggedInUserId = auth()->user()->id;
+
         $bookingsQuery = Booking::filter()
+            ->join('services', 'bookings.service_id', '=', 'services.id')
+            ->where('services.user_id', $loggedInUserId)
             ->with([
                 'bookedByUser',
             ]);
+
 
         if ($request->query('output') === 'export') {
             $this->authorize('exportAny', Booking::class);

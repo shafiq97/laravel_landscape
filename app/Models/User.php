@@ -94,12 +94,12 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function greeting(): Attribute
     {
-        return new Attribute(fn () => __('Hello :name', ['name' => $this->name]));
+        return new Attribute(fn() => __('Hello :name', ['name' => $this->name]));
     }
 
     public function name(): Attribute
     {
-        return new Attribute(fn () => $this->first_name . ' ' . $this->last_name);
+        return new Attribute(fn() => $this->first_name . ' ' . $this->last_name);
     }
 
     public function bookings(): HasMany
@@ -110,7 +110,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function userRoles(): BelongsToMany
     {
         return $this->belongsToMany(UserRole::class)
-                    ->withTimestamps();
+            ->withTimestamps();
     }
 
     public function scopeEmail(Builder $query, ...$searchTerms): Builder
@@ -130,6 +130,10 @@ class User extends Authenticatable implements MustVerifyEmail
         if (isset($validatedData['password'])) {
             $this->password = Hash::make($validatedData['password']);
         }
+
+        // $user = User::find($id);
+        // $user->userRoles()->sync($roleIds);
+
 
         if (!$this->save()) {
             return false;
@@ -157,7 +161,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
         return $abilities->flatten()
             ->unique()
-            ->map(static fn (string $ability) => Ability::tryFrom($ability))
+            ->map(static fn(string $ability) => Ability::tryFrom($ability))
             ->filter()
             ->values();
     }
