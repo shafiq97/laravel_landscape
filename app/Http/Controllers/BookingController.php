@@ -22,8 +22,8 @@ class BookingController extends Controller
     use StreamsExport;
 
     public function index(
-        Service              $service,
-        BookingOption        $bookingOption,
+        Service $service,
+        BookingOption $bookingOption,
         BookingFilterRequest $request
     ): StreamedResponse|View {
         $bookingOption->load([

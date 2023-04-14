@@ -40,8 +40,9 @@
                 @foreach ($bookings as $booking)
                     @php
                         $service = $booking->bookingOption->event;
+                        // dd($service);
                     @endphp
-                    <div class="list-group" style="margin-bottom: 20px">
+                <div class="list-group" style="margin-bottom: 20px">
                         <a href="{{ route('bookings.show', $booking) }}" class="list-group-item list-group-item-action">
                             <strong>{{ $service->name }}</strong>
                             <div>

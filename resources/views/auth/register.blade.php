@@ -35,6 +35,9 @@
                 <x-form.input name="password_confirmation" type="password" required />
             </x-form.row>
             <x-form.row>
+                <x-form.input name="isLandscaper" type="checkbox">{{ __('Register as Landscaper') }}</x-form.input>
+            </x-form.row>
+            <x-form.row>
                 <x-form.input name="remember" type="checkbox">{{ __('Remember me') }}</x-form.input>
             </x-form.row>
             @php

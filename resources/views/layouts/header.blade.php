@@ -124,6 +124,12 @@
                                             {{ __('Bookings') }}
                                         </x-nav.dropdown-item>
                                     @endif
+                                    @if ($role[0] == 'Landscaper')
+                                        <x-nav.dropdown-item href="{{ route('dashboard.landscaper') }}">
+                                            <i class="fa fa-fw fa-book"></i>
+                                            {{ __('Customer Bookings') }}
+                                        </x-nav.dropdown-item>
+                                    @endif
                                 @endif
                                 @if ($loggedInUser->can('viewOwn', \App\Models\PersonalAccessToken::class))
                                     <x-nav.dropdown-item href="{{ route('personal-access-tokens.index') }}">

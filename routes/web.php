@@ -88,6 +88,8 @@ Route::middleware('auth')->group(static function () {
 
 Route::get('/', [DashboardController::class, 'index'])
      ->name('dashboard');
+Route::get('/landscaper', [DashboardController::class, 'landscaper_booking'])
+     ->name('dashboard.landscaper');
 Route::get('/home', [HomeController::class, 'index'])
      ->name('home');
 Route::get('/dashboard_bookings', [DashboardController::class, 'booking_index'])

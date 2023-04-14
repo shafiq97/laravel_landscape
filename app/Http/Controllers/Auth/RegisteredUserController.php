@@ -40,6 +40,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user, $request->boolean('remember'));
 
-        return redirect(RouteServiceProvider::HOME);
+        return redirect(RouteServiceProvider::EDIT_ACCOUNT);
     }
 }
