@@ -13,6 +13,7 @@ use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use PhpParser\Node\Stmt\Else_;
 
 class LandscaperProfileController extends Controller
 {
@@ -39,12 +40,13 @@ class LandscaperProfileController extends Controller
             ->join('locations', 'services.location_id', '=', 'locations.id')
             ->distinct();
 
+        $services = $services->where('services.user_id', $request->user_id);
 
-        /** @var ?\App\Models\User $user */
-        $user = Auth::user();
-        if ($user !== null) {
-            $services = $services->where('user_id', $request->user_id);
-        }
+        // /** @var ?\App\Models\User $user */
+        // $user = Auth::user();
+        // if ($user !== null) {
+        //     $services = $services->where('services.user_id', $request->user_id);
+        // }
 
         $services = $services->paginate();
 
@@ -59,21 +61,25 @@ class LandscaperProfileController extends Controller
         $landscaper_id = request()->query('user_id');
 
         // get chat
-        $chats = Chat::select('chats.*', 'users.first_name')
+        if(Auth::check()){
+            $chats = Chat::select('chats.*', 'users.first_name')
             ->join('users', 'chats.landscaper_id', '=', 'users.id')
             ->where('chats.user_id', auth()->user()->id)
             ->where('chats.landscaper_id', $landscaper_id)
             ->groupBy('chats.landscaper_id')
             ->get();
-
-
+            $userId = auth()->user()->id;
+        }else{
+            $chats = null;
+            $userId = null;
+        }
         return view('landscaper_profile.landscaper_profile', $this->formValuesForFilter([
             'services' => $services,
             'services_user_name' => $request->user_name,
             'user_contact_number' => $contact_number,
             'chats' => $chats,
             'landscaper_id' => $landscaper_id,
-            'user_id' => auth()->user()->id
+            'user_id' => $userId
         ]));
     }
 

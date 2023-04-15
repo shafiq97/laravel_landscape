@@ -33,11 +33,11 @@ class DashboardController extends Controller
 
         /** @var ?\App\Models\User $user */
         $user = Auth::user();
-        if ($user->userRoles()->pluck('name')->contains('Landscaper')) {
-            $services = $services->where('services.user_id', $user->id);
+        if($user){
+            if ($user->userRoles()->pluck('name')->contains('Landscaper')) {
+                $services = $services->where('services.user_id', $user->id);
+            }
         }
-
-
 
         $services->when($request->has('q'), function ($query) use ($request) {
             $q = $request->input('q');
@@ -220,6 +220,7 @@ class DashboardController extends Controller
             ->where('services.visibility', '=', Visibility::Public ->value)
             ->select('services.*', 'users.first_name', DB::raw('COALESCE(AVG(reviews.rating), 0) as service_rating'), 'bo.min_price', DB::raw('reviewer.first_name as reviewer_first_name'))
             ->whereNotNull('reviewer.first_name')
+            ->where('services.id', '=', auth()->user()->id)
             ->groupBy('services.id')
             ->get();
 
@@ -230,7 +231,11 @@ class DashboardController extends Controller
             $total = $total + $service->service_rating;
         }
         $count      = $services->count();
-        $avg_rating = $total / $count;
+        if($count == 0){
+            $avg_rating = 0;
+        }else{
+            $avg_rating = $total / $count;
+        }
 
         // dd($avg_rating);
 
