@@ -11,6 +11,11 @@
                 {{ __('Already registered?') }}
             </a>
         </div>
+        <div class="alert alert-primary mb-3">
+            <a class="alert-link" href="{{ route('register2') }}">
+                {{ __('Register as landscaper?') }}
+            </a>
+        </div>
 
         <x-form method="POST" action="{{ route('register') }}">
             <x-form.row>
@@ -34,9 +39,9 @@
                 <x-form.label for="password_confirmation">{{ __('Confirm password') }}</x-form.label>
                 <x-form.input name="password_confirmation" type="password" required />
             </x-form.row>
-            <x-form.row>
+            {{-- <x-form.row>
                 <x-form.input name="isLandscaper" type="checkbox">{{ __('Register as Landscaper') }}</x-form.input>
-            </x-form.row>
+            </x-form.row> --}}
             <x-form.row>
                 <x-form.input name="remember" type="checkbox">{{ __('Remember me') }}</x-form.input>
             </x-form.row>

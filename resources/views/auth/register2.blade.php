@@ -11,6 +11,11 @@
                 {{ __('Already registered?') }}
             </a>
         </div>
+        <div class="alert alert-primary mb-3">
+            <a class="alert-link" href="{{ route('register') }}">
+                {{ __('Register as user?') }}
+            </a>
+        </div>
 
         <x-form method="POST" action="{{ route('register') }}">
             <x-form.row>
@@ -27,12 +32,14 @@
             </x-form.row>
             <x-form.row>
                 <x-form.label for="password">{{ __('Password') }}</x-form.label>
-                <x-form.input name="password" type="password" required
-                              autocomplete="current-password" />
+                <x-form.input name="password" type="password" required autocomplete="current-password" />
             </x-form.row>
             <x-form.row>
                 <x-form.label for="password_confirmation">{{ __('Confirm password') }}</x-form.label>
                 <x-form.input name="password_confirmation" type="password" required />
+            </x-form.row>
+            <x-form.row>
+                <x-form.input name="isLandscaper" value="true" type="hidden">{{ __('Register as Landscaper') }}</x-form.input>
             </x-form.row>
             <x-form.row>
                 <x-form.input name="remember" type="checkbox">{{ __('Remember me') }}</x-form.input>
@@ -40,11 +47,11 @@
             @php
                 $termsAndConditions = config('app.urls.terms_and_conditions');
             @endphp
-            @if($termsAndConditions)
+            @if ($termsAndConditions)
                 <x-form.row>
                     <x-form.input name="terms_and_conditions" type="checkbox">
                         {!! __('With my registration I accept the :linkStart general terms and conditions:linkEnd.', [
-                            'linkStart' => '<a class="alert-link" href="' . $termsAndConditions .'" target="_blank">',
+                            'linkStart' => '<a class="alert-link" href="' . $termsAndConditions . '" target="_blank">',
                             'linkEnd' => '</a>',
                         ]) !!}
                     </x-form.input>

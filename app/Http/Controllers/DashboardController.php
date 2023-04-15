@@ -22,12 +22,7 @@ class DashboardController extends Controller
 {
     public function index(Request $request): View
     {
-        // $events = Service::query()
-        //     ->where('started_at', '>=', Carbon::now())
-        //     ->where('visibility', '=', Visibility::Public->value)
-        //     ->orderBy('started_at')
-        //     ->limit(10)
-        //     ->get();
+
         $services = Service::query()
             ->leftJoin('reviews', 'services.id', '=', 'reviews.service_id')
             ->leftJoin(DB::raw('(SELECT event_id, MIN(price) AS min_price FROM booking_options GROUP BY event_id) AS bo'), 'services.id', '=', 'bo.event_id')
@@ -35,6 +30,13 @@ class DashboardController extends Controller
             ->where('services.visibility', '=', Visibility::Public ->value)
             ->select('services.*', 'users.first_name', DB::raw('COALESCE(AVG(reviews.rating), 0) as service_rating'), 'bo.min_price')
             ->groupBy('services.id');
+
+        /** @var ?\App\Models\User $user */
+        $user = Auth::user();
+        if ($user->userRoles()->pluck('name')->contains('Landscaper')) {
+            $services = $services->where('services.user_id', $user->id);
+        }
+
 
 
         $services->when($request->has('q'), function ($query) use ($request) {
