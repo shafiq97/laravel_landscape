@@ -70,12 +70,12 @@
                                             {{ __('Service series') }}
                                         </x-nav.dropdown-item>
                                     @endif
-                                    @if ($canViewForms)
+                                    {{-- @if ($canViewForms)
                                         <x-nav.dropdown-item href="{{ route('forms.index') }}">
                                             <i class="fa fa-fw fa-table-list"></i>
                                             {{ __('Forms') }}
                                         </x-nav.dropdown-item>
-                                    @endif
+                                    @endif --}}
                                     @if ($canViewOrganizations)
                                         <x-nav.dropdown-item href="{{ route('organizations.index') }}">
                                             <i class="fa fa-fw fa-sitemap"></i>

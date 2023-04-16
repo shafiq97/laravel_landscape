@@ -46,7 +46,8 @@ class LocationPolicy
      */
     public function create(User $user): Response
     {
-        return $this->requireAbility($user, Ability::CreateLocations);
+        // return $this->requireAbility($user, Ability::CreateLocations);
+        return $this->allow();
     }
 
     /**
