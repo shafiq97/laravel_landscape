@@ -19,17 +19,37 @@ class ChatController extends Controller
         return view('chat.index', compact('chats'));
     }
 
-    public function chat_landscaper()
+    public function chat_landscaper(Request $request)
     {
         $userId       = auth()->user()->id;
-        $landscaperId = request()->input("lanscaper_id");
+        $landscaperId = $request->landscaper_id;
 
         $chats = DB::table('chats')
             ->select(DB::raw('DISTINCT chats.*, users.first_name'))
             ->join('users', 'chats.landscaper_id', '=', 'users.id')
             ->where('chats.user_id', '=', $userId)
-            ->where('chats.landscaper_id', '=', 11)
+            ->where('chats.landscaper_id', '=', $landscaperId)
             ->get();
+
+        if (is_null($chats)) {
+            $message       = "";
+            $user_id       = $request->input('user_id');
+            $landscaper_id = $request->input('landscaper_id');
+
+            // Save the message to the database
+            $chat                = new Chat;
+            $chat->message       = $message;
+            $chat->user_id       = $user_id;
+            $chat->landscaper_id = $landscaper_id;
+            $chat->save();
+
+            $chats = DB::table('chats')
+                ->select(DB::raw('DISTINCT chats.*, users.first_name'))
+                ->join('users', 'chats.landscaper_id', '=', 'users.id')
+                ->where('chats.user_id', '=', $userId)
+                ->where('chats.landscaper_id', '=', $landscaperId)
+                ->get();
+        }
 
         return view('chat.chat', compact('chats'));
     }

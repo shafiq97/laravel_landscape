@@ -25,7 +25,7 @@
         <a href="{{ route('chat.landscaper', ['user_id' => $chats->first()->user_id, 'landscaper_id' => $chats->first()->landscaper_id, 'user_name' => $chats->first()->first_name]) }}"
             class="btn btn-warning">Chat</a>
     @elseif (Auth::check())
-        <a href="{{ route('chat.landscaper', ['user_id' => $user_id, 'landscaper_id' => $landscaper_id]) }}"
+        <a href="{{ route('chat.landscaper', ['user_id' => $user_id, 'landscaper_id' => $landscaper_id, 'user_name' => $services_user_name]) }}"
             class="btn btn-warning">Chat</a>
     @endif
 
