@@ -74,6 +74,7 @@ class BookingController extends Controller
         $booking->price = $bookingOption->price;
         $booking->bookedByUser()->associate(Auth::user());
         $booking->booked_at = Carbon::now();
+        $booking->service_id = $service->id;
 
         if ($booking->fillAndSave($request->validated())) {
             $message = __('Your booking has been saved successfully.')

@@ -15,6 +15,7 @@ use Spatie\QueryBuilder\AllowedFilter;
 
 /**
  * @property-read int $id
+ * @property int $service_id
  * @property string $first_name
  * @property string $last_name
  * @property string $email
@@ -40,6 +41,7 @@ class Booking extends Model
      */
     protected $fillable = [
         'id',
+        'service_id',
         'first_name',
         'last_name',
         'email',
