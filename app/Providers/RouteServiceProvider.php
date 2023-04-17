@@ -19,7 +19,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public const HOME = '/';
     public const EDIT_ACCOUNT = '/account';
-    public const LANDSCAPER_HOME = '/reports';
+    public const LANDSCAPER_HOME = '/dashboard';
 
 
     /**

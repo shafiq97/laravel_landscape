@@ -15,12 +15,28 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarHeader">
                 {{-- Left Side Of Navbar --}}
-                <ul class="navbar-nav me-md-auto">
-                    <x-nav.item href="{{ route('dashboard') }}">
-                        <i class="fa fa-home"></i>
-                        {{ __('Dashboard') }}
-                    </x-nav.item>
-                </ul>
+                @php
+                    $role[0] = null;
+                    $loggedInUser = \Illuminate\Support\Facades\Auth::user();
+                    if (Auth::user()) {
+                        $role = $loggedInUser->userRoles->pluck('name')->toArray();
+                    }
+                @endphp
+                @if ($role[0] == 'Landscaper' && Auth::user())
+                    <ul class="navbar-nav me-md-auto">
+                        <x-nav.item href="{{ route('dashboard.landscaper_report') }}">
+                            <i class="fa fa-home"></i>
+                            {{ __('Dashboard') }}
+                        </x-nav.item>
+                    </ul>
+                @else
+                    <ul class="navbar-nav me-md-auto">
+                        <x-nav.item href="{{ route('dashboard') }}">
+                            <i class="fa fa-home"></i>
+                            {{ __('Search') }}
+                        </x-nav.item>
+                    </ul>
+                @endif
 
                 {{-- Right Side Of Navbar --}}
                 <ul class="navbar-nav ms-md-auto mt-0">
@@ -140,7 +156,8 @@
                                 <x-nav.dropdown-item href="{{ route('logout') }}"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     <i class="fa fa-fw fa-sign-out-alt"></i>
-                                    {{ __('Logout') }}
+                                    <button class="btn btn-danger">{{ __('Logout') }}</button>
+
                                 </x-nav.dropdown-item>
                                 {{-- <x-nav.dropdown-item href="{{ route('chat.center') }}">
                                     <i class="fa fa-fw fa-comment"></i>

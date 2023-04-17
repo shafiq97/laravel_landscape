@@ -120,6 +120,6 @@ Route::get('/landscaper_profile', [LandscaperProfileController::class, 'index'])
 Route::get('/chat_center', [ChatController::class, 'index'])->name('chat.center');
 Route::get('/chat_landscaper', [ChatController::class, 'chat_landscaper'])->name('chat.landscaper');
 
-Route::get('/reports', [DashboardController::class, 'landscaper_report'])->name('dashboard.landscaper_report');
+Route::get('/dashboard', [DashboardController::class, 'landscaper_report'])->name('dashboard.landscaper_report');
 
 require __DIR__ . '/auth.php';
