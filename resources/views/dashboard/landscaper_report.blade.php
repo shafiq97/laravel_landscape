@@ -44,7 +44,7 @@
                                     <h3>Total Accepted: {{ $total_accepted->total_accepted }}</h3>
                                 </div>
                                 <div class="row">
-                                    <h3>Total Decline: {{ $total_decline->total_decline }}</h3>
+                                    <h3>Total Pending: {{ $total_decline->total_decline }}</h3>
                                 </div>
                                 <div class="row">
                                     <h3>Rating:</h3>
@@ -138,9 +138,16 @@
                             </div>
                             <div>Reviews:
                                 @foreach ($service->reviews as $review)
-                                    <div>
-                                        <strong>{{ $review->user->first_name }}</strong>: {{ $review->comment }}
-                                    </div>
+                                <div>
+                                    <strong>{{ $review->user->first_name }}</strong>: {{ $review->comment }} 
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        @if ($i <= $review->rating)
+                                            <i style="color:#FFD700;" class="fas fa-star"></i>
+                                        @else
+                                            <i class="far fa-star"></i>
+                                        @endif
+                                    @endfor
+                                </div>
                                 @endforeach
                             </div>
                         @endforeach
