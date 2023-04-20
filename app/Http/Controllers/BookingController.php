@@ -71,7 +71,9 @@ class BookingController extends Controller
 
         $booking = new Booking();
         $booking->bookingOption()->associate($bookingOption);
-        $booking->price = $bookingOption->price;
+        $day = $request->input('number_of_days');
+        // dd($day);
+        $booking->price = $bookingOption->price * $day;
         $booking->bookedByUser()->associate(Auth::user());
         $booking->booked_at = Carbon::now();
         $booking->service_id = $service->id;

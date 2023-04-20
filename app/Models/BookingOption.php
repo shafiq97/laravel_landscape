@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property-read int $id
+ * @property int $days
  * @property string $name
  * @property string $slug
  * @property ?string $description
@@ -45,6 +46,7 @@ class BookingOption extends Model
         'price',
         'price_conditions',
         'restrictions',
+        'days'
     ];
 
     /**

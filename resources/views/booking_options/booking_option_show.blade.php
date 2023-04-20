@@ -88,8 +88,13 @@
 
                 <x-button.save>
                     @isset($bookingOption->price)
-                        {{ __('Book with costs') }}
-                        ({{ formatDecimal($bookingOption->price) }}&nbsp;)
+                    @if (isset($bookingOption->price) && $bookingOption->price)
+                    <p>
+                        {{ __('Price') }}:
+                        <span id="price">{{ formatDecimal($bookingOption->price) }}</span>
+                    </p>
+                @endif
+                
                     @else
                         {{ __('Book') }}
                     @endisset
