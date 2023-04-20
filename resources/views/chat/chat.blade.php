@@ -42,12 +42,13 @@
         <div class="chat-messages" id="chat-messages">
             <!-- Existing messages will be displayed here -->
         </div>
-        <form class="chat-form" id="chat-form" action="{{ route('chats.store') }}" method="POST">
+        {{-- TODO: center text box --}}
+        <form class="chat-form mt-3" id="chat-form" action="{{ route('chats.store') }}" method="POST">
             @csrf
-            <input type="text" name="message" id="message-input" placeholder="Type your message">
+            <input class="" type="text" name="message" id="message-input" placeholder="Type your message">
             <input type="hidden" name="user_id" value="{{ $_GET['user_id'] }}">
             <input type="hidden" name="landscaper_id" value="{{ $_GET['landscaper_id'] }}">
-            <button type="submit" id="send-btn">Send</button>
+            <button class="btn btn-success" type="submit" id="send-btn">Send</button>
         </form>
     </div>
 
@@ -60,6 +61,9 @@
         const params = new URLSearchParams(window.location.search);
         const landscaperId = params.get('landscaper_id');
         const userName = params.get('user_name');
+
+        var objDiv = document.getElementById("chat-messages");
+        objDiv.scrollTop = objDiv.scrollHeight;
 
         // Update the heading element to display the name
         const heading = document.querySelector('h1');

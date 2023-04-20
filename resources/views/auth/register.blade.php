@@ -11,11 +11,12 @@
 @endsection
 
 @section('main')
-    <div class="register-page">
+    <div class="">
         <x-card.centered>
-            <div style="text-align: center">
-                <img style="height: 200px" src="https://img.freepik.com/free-vector/bird-colorful-gradient-design-vector_343694-2506.jpg"
-                    alt="">
+            <div style="text-align: center; margin-bottom: 5%">
+                {{-- <img style="height: 200px" src="https://img.freepik.com/free-vector/bird-colorful-gradient-design-vector_343694-2506.jpg"
+                    alt=""> --}}
+                <h1>Want to find a landscaper service? Register an account now! </h1>
             </div>
             <div class="alert alert-primary mb-3">
                 <a class="alert-link" href="{{ route('login') }}">
@@ -23,8 +24,9 @@
                 </a>
             </div>
             <div class="alert alert-primary mb-3">
+                {{ 'Are you a landscaper?' }}
                 <a class="alert-link" href="{{ route('register2') }}">
-                    {{ __('Register as landscaper?') }}
+                    {{ __(' REGISTER HERE') }}
                 </a>
             </div>
 

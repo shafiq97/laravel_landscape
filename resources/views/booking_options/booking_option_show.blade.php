@@ -49,21 +49,22 @@
                     </p>
                 @endif
             @endauth
-            {{-- 
+            
             @if (!isset($bookingOption->available_from) || $bookingOption->available_from->isFuture())
                 <p class="alert alert-danger">
                     {{ __('Bookings are not possible yet.') }}
-                </p> --}}
+                </p>
             {{-- @elseif(isset($bookingOption->available_until) && $bookingOption->available_until->isPast())
                 <p class="alert alert-danger">
                     {{ __('The booking period ended at :date.', ['date' => formatDateTime($bookingOption->available_until)]) }}
                     {{ __('Bookings are not possible anymore.') }}
                 </p> --}}
-            {{-- @elseif($bookingOption->hasReachedMaximumBookings())
+            @elseif($bookingOption->hasReachedMaximumBookings())
                 <p class="alert alert-danger">
                     {{ __('The maximum number of bookings has been reached.') }}
                     {{ __('Bookings are not possible anymore.') }}
-                </p> --}}
+                </p>
+                @endif
             {{-- @else --}}
             @include('layouts.alerts')
 

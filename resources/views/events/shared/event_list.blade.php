@@ -38,30 +38,39 @@
                             </div>
                         </div>
                     </div>
+                    <div class="" style="display: flex; gap: 20px;">
+                        <div class="left mr-3">
+                            <div class="mr-3">
+                                <img src="{{ asset('storage/' . $service->image) }}" width="200" alt="Image">
+                            </div>
+                        </div>
 
-                    <div>
-                        <img src="{{ asset('storage/' . $service->image) }}" width="200" alt="Image">
+                        <div class="right">
+                            <div>
+                                <i class="fa fa-fw fa-location-pin"></i>
+                                {{ $service->location->nameOrAddress }}
+                            </div>
+                            @if ($showVisibility)
+                                <div>
+                                    <i class="fa fa-fw fa-eye" title="{{ __('Visibility') }}"></i>
+                                    <x-badge.visibility :visibility="$service->visibility" />
+                                </div>
+                            @endif
+                            <div class="text-muted">
+                                {{ $service->description }}
+                            </div>
+                            <div class="text-muted">
+                                Price from RM{{ $service->min_price }}
+                            </div>
+                        </div>
                     </div>
+                    
                     {{-- <div>
                     <i class="fa fa-fw fa-clock"></i>
                     @include('events.shared.event_dates')
                     </div> --}}
-                    <div>
-                        <i class="fa fa-fw fa-location-pin"></i>
-                        {{ $service->location->nameOrAddress }}
-                    </div>
-                    @if ($showVisibility)
-                        <div>
-                            <i class="fa fa-fw fa-eye" title="{{ __('Visibility') }}"></i>
-                            <x-badge.visibility :visibility="$service->visibility" />
-                        </div>
-                    @endif
-                    <div class="text-muted">
-                        {{ $service->description }}
-                    </div>
-                    <div class="text-muted">
-                        Price from RM{{ $service->min_price }}
-                    </div>
+                    
+
 
                     {{-- <a href="{{ route('chats.index', $service->id) }}" class="btn btn-success">{{ __('Chat') }}</a> --}}
                 </a>

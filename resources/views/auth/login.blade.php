@@ -11,19 +11,19 @@
 @endsection
 
 @section('main')
-    <div class="login-page">
+    <div class="">
 
         <x-card.centered>
-            <div style="text-align: center">
-                <img style="height: 200px" src="https://img.freepik.com/free-vector/bird-colorful-gradient-design-vector_343694-2506.jpg"
-                    alt="">
+            <div style="text-align: center" class="pb-5">
+                {{-- <img style="height: 200px" src="https://img.freepik.com/free-vector/bird-colorful-gradient-design-vector_343694-2506.jpg"
+                    alt=""> --}}
+                    <h1>Login to your account!</h1>
             </div>
             @if (config('app.features.registration'))
                 <div class="alert alert-primary mb-3">
-                    {{ __('Not registered yet?') }}
-
+                    {{ __('No account?') }}
                     <a class="alert-link" href="{{ route('register') }}">
-                        {{ __('Register') }}
+                        {{ __(' REGISTER HERE!') }}
                     </a>
                 </div>
             @endif

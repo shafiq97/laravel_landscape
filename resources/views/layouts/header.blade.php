@@ -2,9 +2,10 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container px-2">
             <div class="div">
-                <img height="50px"
+                {{-- <img height="50px"
                     src="https://img.freepik.com/free-vector/bird-colorful-gradient-design-vector_343694-2506.jpg"
-                    alt="">
+                    alt=""> --}}
+                    <img height="50px" src="{{ asset('storage/utils/logo.avif') }}" >
             </div>
             <a class="navbar-brand" href="{{ route('dashboard') }}">
                 {{ config('app.name') }}
@@ -156,7 +157,8 @@
                                 <x-nav.dropdown-item href="{{ route('logout') }}"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     <i class="fa fa-fw fa-sign-out-alt"></i>
-                                    <button class="btn btn-danger">{{ __('Logout') }}</button>
+                                    <span style="color: red">{{ __('Logout') }}</span>
+                                    
 
                                 </x-nav.dropdown-item>
                                 {{-- <x-nav.dropdown-item href="{{ route('chat.center') }}">

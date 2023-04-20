@@ -8,11 +8,11 @@
             {{ $service->description }}
         </li>
     @endisset
-    @isset($service->website_url)
+    {{-- @isset($service->website_url)
         <li class="list-group-item">
             <a href="{{ $service->website_url }}" target="_blank">{{ __('Website') }}</a>
         </li>
-    @endisset
+    @endisset --}}
     <li class="list-group-item d-flex">
                     <span class="me-3">
                         <i class="fa fa-fw fa-eye" title="{{ __('Visibility') }}"></i>

@@ -6,14 +6,19 @@
 
 @section('main')
     <x-card.centered>
+        <div style="text-align: center; margin-bottom: 5%;">
+            <h1>Want to advertise your landsaping services?</h1>
+            <h1>Register an account now!</h1>
+        </div>
         <div class="alert alert-primary mb-3">
             <a class="alert-link" href="{{ route('login') }}">
                 {{ __('Already registered?') }}
             </a>
         </div>
         <div class="alert alert-primary mb-3">
+            {{ 'Not a landscaper?' }}
             <a class="alert-link" href="{{ route('register') }}">
-                {{ __('Register as user?') }}
+                {{ __(' REGISTER HERE!') }}
             </a>
         </div>
 
@@ -39,7 +44,8 @@
                 <x-form.input name="password_confirmation" type="password" required />
             </x-form.row>
             <x-form.row>
-                <x-form.input name="isLandscaper" value="true" type="hidden">{{ __('Register as Landscaper') }}</x-form.input>
+                <x-form.input name="isLandscaper" value="true" type="hidden">{{ __('Register as Landscaper') }}
+                </x-form.input>
             </x-form.row>
             <x-form.row>
                 <x-form.input name="remember" type="checkbox">{{ __('Remember me') }}</x-form.input>

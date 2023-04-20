@@ -85,7 +85,7 @@ class BookingsExportSpreadsheet extends Spreadsheet
     private function getColumnsForRow(Booking $booking): array
     {
         $columns = [
-            $this->event->name,
+            $this->service->name,
             $this->bookingOption->name,
             $booking->id,
             isset($booking->booked_at)
