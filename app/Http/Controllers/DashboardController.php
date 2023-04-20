@@ -22,6 +22,10 @@ class DashboardController extends Controller
 {
     public function index(Request $request): View
     {
+        $user = Auth::user();
+        if (!$user) {
+            return view('home');
+        }
 
         $services = Service::query()
             ->leftJoin('reviews', 'services.id', '=', 'reviews.service_id')
@@ -33,7 +37,7 @@ class DashboardController extends Controller
 
         /** @var ?\App\Models\User $user */
         $user = Auth::user();
-        if($user){
+        if ($user) {
             if ($user->userRoles()->pluck('name')->contains('Landscaper')) {
                 $services = $services->where('services.user_id', $user->id);
             }
@@ -230,10 +234,10 @@ class DashboardController extends Controller
         foreach ($services as $service) {
             $total = $total + $service->service_rating;
         }
-        $count      = $services->count();
-        if($count == 0){
+        $count = $services->count();
+        if ($count == 0) {
             $avg_rating = 0;
-        }else{
+        } else {
             $avg_rating = $total / $count;
         }
 
