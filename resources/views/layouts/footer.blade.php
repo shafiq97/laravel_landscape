@@ -4,9 +4,7 @@
             <div class="col">
                 <div class="row">
                     <div class="div">
-                        <img height="50px"
-                            src="https://img.freepik.com/free-vector/bird-colorful-gradient-design-vector_343694-2506.jpg"
-                            alt="">
+                        <img height="50px" src="{{ asset('storage/utils/logo.avif') }}" >
                     </div>
                 </div>
                 <div class="row">

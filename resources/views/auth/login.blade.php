@@ -15,8 +15,6 @@
 
         <x-card.centered>
             <div style="text-align: center" class="pb-5">
-                {{-- <img style="height: 200px" src="https://img.freepik.com/free-vector/bird-colorful-gradient-design-vector_343694-2506.jpg"
-                    alt=""> --}}
                     <h1>Login to your account!</h1>
             </div>
             @if (config('app.features.registration'))

@@ -2,9 +2,6 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container px-2">
             <div class="div">
-                {{-- <img height="50px"
-                    src="https://img.freepik.com/free-vector/bird-colorful-gradient-design-vector_343694-2506.jpg"
-                    alt=""> --}}
                     <img height="50px" src="{{ asset('storage/utils/logo.avif') }}" >
             </div>
             <a class="navbar-brand" href="{{ route('dashboard') }}">
