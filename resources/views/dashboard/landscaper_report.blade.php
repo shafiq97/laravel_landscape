@@ -25,11 +25,18 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Overview</h5>
-                        @php
+                        {{-- @php
                             $booking_counts = $bookings
                                 ->groupBy('email')
                                 ->map(fn($group) => $group->count())
                                 ->toArray();
+                            
+                        @endphp --}}
+                        @php
+                            $booking_counts = [
+                                'Accepted' => $total_accepted->total_accepted ,
+                                'Pending' => $total_decline->total_decline,
+                            ];
                         @endphp
 
                         <div class="row">
@@ -138,16 +145,16 @@
                             </div>
                             <div>Reviews:
                                 @foreach ($service->reviews as $review)
-                                <div>
-                                    <strong>{{ $review->user->first_name }}</strong>: {{ $review->comment }} 
-                                    @for ($i = 1; $i <= 5; $i++)
-                                        @if ($i <= $review->rating)
-                                            <i style="color:#FFD700;" class="fas fa-star"></i>
-                                        @else
-                                            <i class="far fa-star"></i>
-                                        @endif
-                                    @endfor
-                                </div>
+                                    <div>
+                                        <strong>{{ $review->user->first_name }}</strong>: {{ $review->comment }}
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            @if ($i <= $review->rating)
+                                                <i style="color:#FFD700;" class="fas fa-star"></i>
+                                            @else
+                                                <i class="far fa-star"></i>
+                                            @endif
+                                        @endfor
+                                    </div>
                                 @endforeach
                             </div>
                         @endforeach
