@@ -111,6 +111,14 @@
                                   value="{{ $booking->phone ?? null }}" />
                 </x-form.row>
                 <x-form.row>
+                    <x-form.label for="booking_date">{{ __('Booking date') }}</x-form.label>
+                    <x-form.input readonly disabled name="booking_date" value="{{ $booking->created_at->format('d-m-Y') }}" />
+                </x-form.row>
+                <x-form.row>
+                    <x-form.label for="booking_days">{{ __('Booking days') }}</x-form.label>
+                    <x-form.input readonly disabled name="booking_days" value="{{ $booking->booking_days }}" />
+                </x-form.row>
+                <x-form.row>
                     <x-form.label for="email">{{ __('E-mail') }}</x-form.label>
                     <x-form.input readonly disabled name="email"
                                   value="{{ $booking->email }}" />

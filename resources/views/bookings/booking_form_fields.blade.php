@@ -79,6 +79,11 @@
         <x-form.label for="email">{{ __('E-mail') }}</x-form.label>
         <x-form.input name="email" type="email" :value="$booking->email ?? null" />
     </x-form.row>
+    <x-form.row>
+        <x-form.label for="booking_date">{{ __('Booking date') }}</x-form.label>
+        <x-form.input name="booking_date" type="date" :value="$booking->booking_date ?? null" />
+    </x-form.row>
+    
     @if ($bookingOption->price)
         <div class="row">
             <div class="col-12 col-md-6">

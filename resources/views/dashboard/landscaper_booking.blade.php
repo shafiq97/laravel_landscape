@@ -112,6 +112,14 @@
                             {{ $booking->email }}
                         </x-list.item>
                         <x-list.item :flex="false">
+                            <i class="fa fa-fw fa-calendar"></i>
+                            {{ $booking->booking_date }}
+                        </x-list.item>
+                        <x-list.item :flex="false">
+                            <i class="fa fa-fw fa-calendar-days"></i>
+                            {{ $booking->booking_days }} days
+                        </x-list.item>
+                        <x-list.item :flex="false">
                             <i class="fa fa-fw fa-phone"></i>
                             {{ $booking->phone ?? __('none') }}
                         </x-list.item>

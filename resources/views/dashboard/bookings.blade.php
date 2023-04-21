@@ -54,6 +54,14 @@
                                 {{ $booking->first_name }} {{ $booking->last_name }}
                             </div>
                             <div>
+                                <i class="fa fa-fw fa-calendar"></i>
+                                {{ $booking->booking_date }}
+                            </div>
+                            <div>
+                                <i class="fa fa-fw fa-calendar-days"></i>
+                                {{ $booking->booking_days }} days
+                            </div>
+                            <div>
                                 @isset($booking->price)
                                     <span class="badge bg-primary">{{ formatDecimal($booking->price) }}&nbsp;</span>
                                     @isset($booking->paid_at)

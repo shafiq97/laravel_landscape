@@ -16,11 +16,13 @@ use Spatie\QueryBuilder\AllowedFilter;
 /**
  * @property-read int $id
  * @property int $service_id
+ * @property int $booking_days
  * @property string $first_name
  * @property string $last_name
  * @property string $email
  * @property ?string $phone
  * @property ?Carbon $booked_at
+ * @property ?Carbon $booking_date
  * @property ?float $price
  * @property ?Carbon $paid_at
  * @property ?string $comment
@@ -54,6 +56,8 @@ class Booking extends Model
         'booked_at',
         'paid_at',
         'comment',
+        'booking_date',
+        'booking_days'
     ];
 
     /**
