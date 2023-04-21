@@ -1,5 +1,33 @@
 @extends('layouts.app')
 <style>
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* height: 100vh; */
+    }
+
+    .chat-container {
+        display: flex;
+        flex-direction: column;
+        max-width: 500px;
+        width: 100%;
+        margin: 0 auto;
+        height: 100%;
+    }
+
+    .chat-form {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin-top: 20px;
+        gap: 10px;
+    }
+
+    .chat-form input[type="text"] {
+        width: 100%;
+    }
+
     .message-body {
         word-wrap: break-word;
     }
@@ -37,20 +65,23 @@
     }
 </style>
 @section('content')
-    <div class="chat-container">
-        <h1></h1>
-        <div class="chat-messages" id="chat-messages">
-            <!-- Existing messages will be displayed here -->
+    <div class="container">
+        <div class="chat-container">
+            <h1></h1>
+            <div class="chat-messages" id="chat-messages">
+                <!-- Existing messages will be displayed here -->
+            </div>
+            {{-- TODO: center text box --}}
+            <form class="chat-form mt-3" id="chat-form" action="{{ route('chats.store') }}" method="POST">
+                @csrf
+                <input class="" type="text" name="message" id="message-input" placeholder="Type your message">
+                <input type="hidden" name="user_id" value="{{ $_GET['user_id'] }}">
+                <input type="hidden" name="landscaper_id" value="{{ $_GET['landscaper_id'] }}">
+                <button class="btn btn-success" type="submit" id="send-btn">Send</button>
+            </form>
         </div>
-        {{-- TODO: center text box --}}
-        <form class="chat-form mt-3" id="chat-form" action="{{ route('chats.store') }}" method="POST">
-            @csrf
-            <input class="" type="text" name="message" id="message-input" placeholder="Type your message">
-            <input type="hidden" name="user_id" value="{{ $_GET['user_id'] }}">
-            <input type="hidden" name="landscaper_id" value="{{ $_GET['landscaper_id'] }}">
-            <button class="btn btn-success" type="submit" id="send-btn">Send</button>
-        </form>
     </div>
+
 
     <script>
         // Get the form, input field, and chat messages div
@@ -61,9 +92,7 @@
         const params = new URLSearchParams(window.location.search);
         const landscaperId = params.get('landscaper_id');
         const userName = params.get('user_name');
-
-        var objDiv = document.getElementById("chat-messages");
-        objDiv.scrollTop = objDiv.scrollHeight;
+        chatMessages.scrollTop = chatMessages.scrollHeight;
 
         // Update the heading element to display the name
         const heading = document.querySelector('h1');
@@ -81,6 +110,7 @@
                 const userId = {{ auth()->user()->id }}; // <-- get the currently logged-in user ID
                 // Display chat history in chat messages div
                 data.chats.forEach(message => {
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
                     console.log(message.user_id);
                     const messageDiv = document.createElement('div');
                     messageDiv.classList.add('message');
@@ -113,15 +143,16 @@
             const messageDiv = document.createElement('div');
             messageDiv.classList.add('message');
             messageDiv.innerHTML = `
-          <div class="message-header">
-              <strong>You</strong>
-              <span class="timestamp">${new Date().toLocaleTimeString()}</span>
-          </div>
-          <div class="message-body">
-              ${message}
-          </div>
-      `;
+      <div class="message-header">
+          <strong>You</strong>
+          <span class="timestamp">${new Date().toLocaleTimeString()}</span>
+      </div>
+      <div class="message-body">
+          ${message}
+      </div>
+  `;
             chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
 
             // Clear the input field
             messageInput.value = '';
@@ -133,15 +164,27 @@
 
             // Send an AJAX request to save the message to the database
             fetch('/chat', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(
-                        'content')
-                },
-                body: JSON.stringify(body)
-            });
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute(
+                            'content')
+                    },
+                    body: JSON.stringify(body)
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // Auto-scroll to the bottom of the chat messages div
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                    } else {
+                        throw new Error('Network response was not ok.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error sending chat message:', error);
+                });
         });
+
 
         // Listen for the send button click event
         sendBtn.addEventListener('click', () => {
