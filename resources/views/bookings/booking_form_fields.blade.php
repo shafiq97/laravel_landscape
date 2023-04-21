@@ -81,7 +81,7 @@
     </x-form.row>
     <x-form.row>
         <x-form.label for="booking_date">{{ __('Booking date') }}</x-form.label>
-        <x-form.input name="booking_date" type="date" :value="$booking->booking_date ?? null" />
+        <x-form.input required name="booking_date" type="date" :value="$booking->booking_date ?? null" />
     </x-form.row>
     
     @if ($bookingOption->price)

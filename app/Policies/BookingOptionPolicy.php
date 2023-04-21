@@ -66,7 +66,6 @@ class BookingOptionPolicy
                 . ' '
                 . __('Bookings are not possible anymore.')
             );
-            // return back();
         }
 
         if (

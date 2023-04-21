@@ -67,20 +67,25 @@ class BookingController extends Controller
 
     public function store(Service $service, BookingOption $bookingOption, BookingRequest $request): RedirectResponse
     {
-        $this->authorize('book', $bookingOption);
+        // $this->authorize('book', $bookingOption);
 
         $booking = new Booking();
         $booking->bookingOption()->associate($bookingOption);
         $days = $request->input('number_of_days');
         // dd($day);
-        $booking->price = $bookingOption->price * $days;
+        $booking->price        = $bookingOption->price * $days;
         $booking->booking_days = $days;
         $booking->bookedByUser()->associate(Auth::user());
-        $booking->booked_at = Carbon::now();
+        $booking->booked_at    = Carbon::now();
         $booking->booking_date = $request->input('booking_date');
-        $booking->service_id = $service->id;
+        $booking->service_id   = $service->id;
 
-        if ($booking->fillAndSave($request->validated())) {
+
+        if ($bookingOption->hasReachedMaximumBookings()) {
+            $message = __('The maximum booking has been reached.');
+            Session::flash('error', $message);
+        }
+        elseif ($booking->fillAndSave($request->validated())) {
             $message = __('Your booking has been saved successfully.')
                 . ' ' . __('We will send you a confirmation by e-mail shortly.');
             Session::flash('success', $message);

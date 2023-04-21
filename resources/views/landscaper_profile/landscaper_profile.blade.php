@@ -79,7 +79,7 @@
 
 
 
-    <x-form.filter method="GET">
+    {{-- <x-form.filter method="GET">
         <div class="row">
             <div class="col-12 col-md-6">
                 <x-form.row>
@@ -104,7 +104,7 @@
                 </x-form.row>
             </div>
         </div>
-    </x-form.filter>
+    </x-form.filter> --}}
 
 
     <x-alert.count class="mt-3" :count="$services->total()" />
