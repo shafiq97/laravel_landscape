@@ -21,7 +21,7 @@ class EventController extends Controller
     public function index(EventFilterRequest $request): View
     {
         $this->authorize('viewAny', Service::class);
-    
+
         $services = Service::filter()
             ->with([
                 'bookingOptions' => static fn(HasMany $query) => $query->withCount([
@@ -33,20 +33,20 @@ class EventController extends Controller
                 'parentEvent',
                 'user' => static fn(BelongsTo $query) => $query->select('id', 'first_name'),
             ]);
-    
+
         /** @var ?\App\Models\User $user */
         $user = Auth::user();
         if ($user !== null && $user->userRoles()->pluck('name')->contains('Landscaper')) {
             $services = $services->where('user_id', $user->id);
         }
-    
+
         $services = $services->paginate();
-    
+
         return view('events.event_index', $this->formValuesForFilter([
             'services' => $services,
         ]));
     }
-    
+
 
     public function destroy(Service $service): RedirectResponse
     {
@@ -64,15 +64,21 @@ class EventController extends Controller
     {
         $this->authorize('view', $service);
 
-        return view('events.event_show', [
-            'service' => $service->loadMissing([
-                'bookingOptions' => static fn(HasMany $query) => $query->withCount([
-                    'bookings',
-                ]),
+        $serviceWithUser = Service::select('services.*', 'users.first_name', 'users.email', 'users.phone')
+            ->leftJoin('users', 'users.id', '=', 'services.user_id')
+            ->with([
+                'bookingOptions' => static fn(HasMany $query) => $query->withCount(['bookings']),
                 'subEvents.location',
-            ]),
+            ])
+            ->findOrFail($service->id);
+
+        return view('events.event_show', [
+            'service' => $serviceWithUser,
         ]);
     }
+
+
+
 
     public function create(): View
     {
@@ -89,7 +95,7 @@ class EventController extends Controller
             return back()->withErrors(['image' => __('Failed to upload image.')]);
         }
 
-        $service = new Service();
+        $service          = new Service();
         $service->user_id = Auth::id(); // Set the user_id of the current user
         if ($service->fillAndSave($request->validated())) {
             Session::flash('success', __('Created successfully.'));
