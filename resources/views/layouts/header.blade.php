@@ -130,7 +130,7 @@
                                 @if ($loggedInUser->can('editAccount', \App\Models\User::class))
                                     <x-nav.dropdown-item href="{{ route('account.edit') }}">
                                         <i class="fa fa-fw fa-user-cog"></i>
-                                        {{ __('My account') }}
+                                        {{ __('My Profile') }}
                                     </x-nav.dropdown-item>
                                     @if ($role[0] == 'User')
                                         <x-nav.dropdown-item href="{{ route('dashboard.bookings') }}">

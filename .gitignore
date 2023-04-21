@@ -7,10 +7,10 @@
 /public/js/
 /public/lib
 /public/hot
-/public/storage
+# /public/storage
 /storage/*.key
 /vendor
-.env
+# .env
 .env.backup
 .phpunit.result.cache
 Homestead.json

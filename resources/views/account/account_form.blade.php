@@ -6,7 +6,7 @@
 @endphp
 
 @section('title')
-    {{ __('My account') }}
+    {{ __('My Profile') }}
 @endsection
 
 @section('content')
