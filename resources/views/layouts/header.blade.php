@@ -145,12 +145,12 @@
                                         </x-nav.dropdown-item>
                                     @endif
                                 @endif
-                                @if ($loggedInUser->can('viewOwn', \App\Models\PersonalAccessToken::class))
+                                {{-- @if ($loggedInUser->can('viewOwn', \App\Models\PersonalAccessToken::class))
                                     <x-nav.dropdown-item href="{{ route('personal-access-tokens.index') }}">
                                         <i class="fa fa-fw fa-id-card-clip"></i>
                                         {{ __('Personal access tokens') }}
                                     </x-nav.dropdown-item>
-                                @endif
+                                @endif --}}
                                 <x-nav.dropdown-item href="{{ route('logout') }}"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     <i class="fa fa-fw fa-sign-out-alt"></i>
