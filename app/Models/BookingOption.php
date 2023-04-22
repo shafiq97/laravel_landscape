@@ -73,10 +73,10 @@ class BookingOption extends Model
         return $this->belongsTo(Service::class, 'event_id');
     }
 
-    public function form(): BelongsTo
-    {
-        return $this->belongsTo(Form::class, 'form_id');
-    }
+    // public function form(): BelongsTo
+    // {
+    //     return $this->belongsTo(Form::class, 'form_id');
+    // }
 
     public function fillAndSave(array $validatedData): bool
     {

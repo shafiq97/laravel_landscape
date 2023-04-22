@@ -59,11 +59,10 @@ class BookingController extends Controller
         $this->authorize('view', $booking);
 
         return view('bookings.booking_show', [
-            'booking' => $booking->loadMissing([
-                'bookingOption.form.formFieldGroups.formFields',
-            ]),
+            'booking' => $booking,
         ]);
     }
+
 
     public function store(Service $service, BookingOption $bookingOption, BookingRequest $request): RedirectResponse
     {
@@ -84,8 +83,7 @@ class BookingController extends Controller
         if ($bookingOption->hasReachedMaximumBookings()) {
             $message = __('The maximum booking has been reached.');
             Session::flash('error', $message);
-        }
-        elseif ($booking->fillAndSave($request->validated())) {
+        } elseif ($booking->fillAndSave($request->validated())) {
             $message = __('Your booking has been saved successfully.')
                 . ' ' . __('We will send you a confirmation by e-mail shortly.');
             Session::flash('success', $message);

@@ -91,6 +91,7 @@
         const sendBtn = document.getElementById('send-btn');
         const params = new URLSearchParams(window.location.search);
         const landscaperId = params.get('landscaper_id');
+        const userId = params.get('user_id');
         const userName = params.get('user_name');
         chatMessages.scrollTop = chatMessages.scrollHeight;
 
@@ -99,7 +100,7 @@
         heading.textContent = `Chat with ${userName}`;
         // Load the chat history
         // Fetch chat history
-        fetch(`/chat/history/${landscaperId}`, {
+        fetch(`/chat/history/${landscaperId}/${userId}`, {
                 headers: {
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                 }
@@ -108,6 +109,8 @@
             .then(data => {
                 // Get logged-in user ID
                 const userId = {{ auth()->user()->id }}; // <-- get the currently logged-in user ID
+                console.log(userId);
+                console.log(data);
                 // Display chat history in chat messages div
                 data.chats.forEach(message => {
                     chatMessages.scrollTop = chatMessages.scrollHeight;

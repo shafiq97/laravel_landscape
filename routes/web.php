@@ -113,7 +113,7 @@ Route::post('/reviews', 'App\Http\Controllers\ReviewController@store')->name('re
 
 Route::get('/chats/create', [App\Http\Controllers\ChatController::class, 'index'])->name('chats.index');
 Route::post('/chats', [App\Http\Controllers\ChatController::class, 'store'])->name('chats.store');
-Route::get('/chat/history/{landscaper_id}', [ChatController::class, 'history'])->name('chats.history');
+Route::get('/chat/history/{landscaper_id}/{user_id}', [ChatController::class, 'history'])->name('chats.history');
 
 Route::get('/landscaper_profile', [LandscaperProfileController::class, 'index'])->name('landscaper_profile.index');
 
