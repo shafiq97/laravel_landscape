@@ -61,19 +61,21 @@
         <div class="col-12 col-md-6">
             <x-form.row>
                 <x-form.label for="first_name">{{ __('First name') }}</x-form.label>
-                <x-form.input name="first_name" type="text" :value="$booking->first_name ?? null" />
+                <x-form.input name="first_name" type="text" :value="$booking->first_name ?? null" pattern="[A-Za-z]+" />
+                <small class="muted-text" style="color: red">Use only letters</small>
             </x-form.row>
         </div>
         <div class="col-12 col-md-6">
             <x-form.row>
                 <x-form.label for="last_name">{{ __('Last name') }}</x-form.label>
-                <x-form.input name="last_name" type="text" :value="$booking->last_name ?? null" />
+                <x-form.input name="last_name" type="text" :value="$booking->last_name ?? null" pattern="[A-Za-z]+" />
+                <small class="muted-text" style="color: red">Use only letters</small>
             </x-form.row>
         </div>
     </div>
     <x-form.row>
         <x-form.label for="phone">{{ __('Phone number') }}</x-form.label>
-        <x-form.input name="phone" type="tel" :value="$booking->phone ?? null" />
+        <x-form.input name="phone" type="number" :value="$booking->phone ?? null" />
     </x-form.row>
     <x-form.row>
         <x-form.label for="email">{{ __('E-mail') }}</x-form.label>
@@ -83,14 +85,14 @@
         <x-form.label for="booking_date">{{ __('Booking date') }}</x-form.label>
         <x-form.input required name="booking_date" type="date" :value="$booking->booking_date ?? null" />
     </x-form.row>
-    
+
     @if ($bookingOption->price)
         <div class="row">
             <div class="col-12 col-md-6">
                 <x-form.row>
                     <x-form.label for="number_of_days">{{ __('Number of days') }}</x-form.label>
-                    <x-form.input name="days" id="number_of_days" name="number_of_days" type="number" :value="$booking?->days ?? 1" min="1"
-                        step="1" required />
+                    <x-form.input name="days" id="number_of_days" name="number_of_days" type="number" :value="$booking?->days ?? 1"
+                        min="1" step="1" required />
                 </x-form.row>
             </div>
         </div>

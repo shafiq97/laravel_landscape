@@ -5,20 +5,20 @@
     /** @var \Illuminate\Database\Eloquent\Collection|\App\Models\Service[] $events */
 @endphp
 
-@section('title')
+{{-- @section('title')
     {{ __('Dashboard') }}
-@endsection
+@endsection --}}
 
 @section('content')
     <div class="row">
         <div class="col-12">
-            <form action="{{ route('dashboard') }}" method="GET">
+            {{-- <form action="{{ route('dashboard') }}" method="GET">
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" name="q"
                         placeholder="{{ __('Search by services, description and landscaper') }}">
                     <button class="btn btn-primary" type="submit">{{ __('Search') }}</button>
                 </div>
-            </form>
+            </form> --}}
         </div>
     </div>
 

@@ -49,24 +49,24 @@
                     </p>
                 @endif
             @endauth
-            
-            @if (!isset($bookingOption->available_from) || $bookingOption->available_from->isFuture())
+
+            {{-- @if (!isset($bookingOption->available_from) || $bookingOption->available_from->isFuture()) --}}
                 {{-- <p class="alert alert-danger">
                     {{ __('Bookings are not possible yet.') }}
                 </p> --}}
-            {{-- @elseif(isset($bookingOption->available_until) && $bookingOption->available_until->isPast())
+                {{-- @elseif(isset($bookingOption->available_until) && $bookingOption->available_until->isPast())
                 <p class="alert alert-danger">
                     {{ __('The booking period ended at :date.', ['date' => formatDateTime($bookingOption->available_until)]) }}
                     {{ __('Bookings are not possible anymore.') }}
                 </p> --}}
-            @elseif($bookingOption->hasReachedMaximumBookings())
+            {{-- @elseif($bookingOption->hasReachedMaximumBookings())
                 <p class="alert alert-danger">
                     {{ __('The maximum number of bookings has been reached.') }}
                     {{ __('Bookings are not possible anymore.') }}
                 </p>
-                @endif
+            @endif --}}
             {{-- @else --}}
-            @include('layouts.alerts')
+            {{-- @include('layouts.alerts') --}}
 
             <x-form method="POST" action="{{ route('bookings.store', [$service, $bookingOption]) }}">
                 @include('bookings.booking_form_fields', [
@@ -89,13 +89,12 @@
 
                 <x-button.save>
                     @isset($bookingOption->price)
-                    @if (isset($bookingOption->price) && $bookingOption->price)
-                    <p>
-                        {{ __('Price') }}:
-                        <span id="price">{{ formatDecimal($bookingOption->price) }}</span>
-                    </p>
-                @endif
-                
+                        @if (isset($bookingOption->price) && $bookingOption->price)
+                            <p>
+                                {{ __('Price') }}:
+                                <span id="price">{{ formatDecimal($bookingOption->price) }}</span>
+                            </p>
+                        @endif
                     @else
                         {{ __('Book') }}
                     @endisset

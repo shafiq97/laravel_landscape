@@ -15,12 +15,15 @@
             <div class="col-12 col-md-6">
                 <x-form.row>
                     <x-form.label for="first_name">{{ __('First name') }}</x-form.label>
-                    <x-form.input name="first_name" type="text" :value="$user->first_name ?? null" />
+                    <x-form.input name="first_name" type="text" :value="$user->first_name ?? null" pattern="[A-Za-z]+" />
+                    <small class="muted-text" style="color: red">Use only letters</small>
                 </x-form.row>
                 <x-form.row>
                     <x-form.label for="last_name">{{ __('Last name') }}</x-form.label>
-                    <x-form.input name="last_name" type="text" :value="$user->last_name ?? null" />
+                    <x-form.input name="last_name" type="text" :value="$user->last_name ?? null" pattern="[A-Za-z]+" />
+                    <small class="muted-text" style="color:red">Use only letters</small>
                 </x-form.row>
+
                 <x-form.row>
                     <x-form.label for="email">{{ __('E-mail') }}</x-form.label>
                     <x-form.input name="email" type="email" :value="$user->email ?? null" />
@@ -69,7 +72,7 @@
         </x-button.save>
     </x-form>
 
-    <section class="mt-3">
+    {{-- <section class="mt-3">
         <h2>{{ __('Abilities') }}</h2>
         <div class="mb-3">
             @foreach ($user->userRoles as $userRole)
@@ -83,5 +86,5 @@
                 <li>{{ $ability->getTranslatedName() }}</li>
             @endforeach
         </ul>
-    </section>
+    </section> --}}
 @endsection

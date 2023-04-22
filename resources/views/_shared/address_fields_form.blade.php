@@ -21,7 +21,7 @@
     <div class="col-12 col-md-4">
         <x-form.row>
             <x-form.label for="postal_code">{{ __('Postal code') }}</x-form.label>
-            <x-form.input name="postal_code" type="text"
+            <x-form.input name="postal_code" type="number"
                           :value="$address->postal_code ?? null" />
         </x-form.row>
     </div>
