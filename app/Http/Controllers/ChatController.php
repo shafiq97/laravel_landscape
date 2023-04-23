@@ -14,7 +14,7 @@ class ChatController extends Controller
         $chats = Chat::select('chats.*', 'users.first_name')
             ->join('users', 'chats.user_id', '=', 'users.id')
             ->where('chats.landscaper_id', auth()->user()->id)
-            // ->groupBy('chats.landscaper_id')
+            ->groupBy('chats.user_id')
             ->get();
         return view('chat.index', compact('chats'));
     }
