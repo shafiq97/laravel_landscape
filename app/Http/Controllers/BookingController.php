@@ -26,10 +26,6 @@ class BookingController extends Controller
         BookingOption $bookingOption,
         BookingFilterRequest $request
     ): StreamedResponse|View {
-        $bookingOption->load([
-            'form.formFieldGroups.formFields',
-        ]);
-
         $bookingsQuery = Booking::filter($bookingOption->bookings())
             ->with([
                 'bookedByUser',
@@ -53,6 +49,7 @@ class BookingController extends Controller
             'bookings' => $bookingsQuery->paginate(),
         ]);
     }
+
 
     public function show(Booking $booking): View
     {
