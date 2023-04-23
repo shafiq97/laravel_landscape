@@ -32,12 +32,12 @@
                 <x-form.row>
                     <x-form.label for="first_name">{{ __('First name') }}</x-form.label>
                     <x-form.input name="first_name" type="text" required autofocus pattern="[A-Za-z ]+" />
-                    <small style="color: red">Use letters only</small>
+                    {{-- <small style="color: red">Use letters only</small> --}}
                 </x-form.row>
                 <x-form.row>
                     <x-form.label for="last_name">{{ __('Last name') }}</x-form.label>
                     <x-form.input name="last_name" type="text" required pattern="[A-Za-z ]+" />
-                    <small style="color: red">Use letters only</small>
+                    {{-- <small style="color: red">Use letters only</small> --}}
                 </x-form.row>
                 <x-form.row>
                     <x-form.label for="email">{{ __('E-mail') }}</x-form.label>
