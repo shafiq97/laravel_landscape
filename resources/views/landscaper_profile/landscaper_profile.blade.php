@@ -35,9 +35,9 @@
     </h6>
     <h6>
         <div style="display: flex">
-            Provided Area:
+            Provided Area :
             @foreach ($services->unique('location_name') as $service)
-                <p> {{ $service->location_name }},</p><br>
+                <p> &nbsp {{ $service->location_name }}, </p>
             @endforeach
         </div>
     </h6>
