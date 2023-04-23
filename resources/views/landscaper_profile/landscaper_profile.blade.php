@@ -37,7 +37,7 @@
         <div style="display: flex">
             Provided Area:
             @foreach ($services->unique('location_name') as $service)
-                <p> {{ $service->location_name }}</p>
+                <p> {{ $service->location_name }}</p><br>
             @endforeach
         </div>
     </h6>
