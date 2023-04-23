@@ -104,11 +104,10 @@ class BookingController extends Controller
         $this->authorize('update', $booking);
 
         return view('bookings.booking_form', [
-            'booking' => $booking->loadMissing([
-                'bookingOption.form.formFieldGroups.formFields',
-            ]),
+            'booking' => $booking,
         ]);
     }
+
 
     public function update(Booking $booking, BookingRequest $request): RedirectResponse
     {
