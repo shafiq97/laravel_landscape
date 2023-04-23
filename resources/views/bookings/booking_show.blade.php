@@ -134,7 +134,7 @@
                     </div>
                     <div class="col-12 col-md-4">
                         <x-form.row>
-                            <x-form.label for="house_number">{{ __('House number') }}</x-form.label>
+                            <x-form.label for="house_number">{{ __('Lot Number') }}</x-form.label>
                             <x-form.input readonly disabled name="house_number"
                                           value="{{ $booking->house_number ?? null }}" />
                         </x-form.row>

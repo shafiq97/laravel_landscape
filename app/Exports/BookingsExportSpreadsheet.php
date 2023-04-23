@@ -66,7 +66,7 @@ class BookingsExportSpreadsheet extends Spreadsheet
                 __('Phone number'),
                 __('E-mail'),
                 __('Street'),
-                __('House number'),
+                __('Lot Number'),
                 __('Postal code'),
                 __('City'),
                 __('Country'),

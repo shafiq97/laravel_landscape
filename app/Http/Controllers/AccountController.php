@@ -25,6 +25,8 @@ class AccountController extends Controller
         /** @var User $user */
         $user = Auth::user();
 
+        // dd($request);
+
         if ($user->fillAndSave($request->validated())) {
             Session::flash('success', __('Saved successfully.'));
             return redirect(route('account.edit'));

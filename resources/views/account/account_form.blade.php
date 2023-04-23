@@ -23,7 +23,10 @@
                     <x-form.input name="last_name" type="text" :value="$user->last_name ?? null" pattern="[A-Za-z]+" />
                     <small class="muted-text" style="color:red">Use only letters</small>
                 </x-form.row>
-
+                <x-form.row>
+                    <x-form.label for="contact">{{ __('Contact') }}</x-form.label>
+                    <x-form.input name="phone" type="number" :value="$user->phone ?? null" />
+                </x-form.row>
                 <x-form.row>
                     <x-form.label for="email">{{ __('E-mail') }}</x-form.label>
                     <x-form.input name="email" type="email" :value="$user->email ?? null" />
