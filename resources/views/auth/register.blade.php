@@ -14,7 +14,8 @@
     <div class="">
         <x-card.centered>
             <div style="text-align: center; margin-bottom: 5%">
-                <h1>Want to find a landscaper service? Register an account now! </h1>
+                <h1>Want to find a landscaper service? </h1>
+                <h1>Register an account now!</h1>
             </div>
             <div class="alert alert-primary mb-3">
                 <a class="alert-link" href="{{ route('login') }}">
