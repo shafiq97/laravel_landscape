@@ -12,16 +12,13 @@ class ChatController extends Controller
     public function index()
     {
         $chats = Chat::select('chats.*', 'users.first_name')
-            ->join('users', 'chats.landscaper_id', '=', 'users.id')
-            ->where(function ($query) {
-                $query->where('chats.user_id', auth()->user()->id)
-                    ->orWhere('chats.landscaper_id', auth()->user()->id);
-            })
-            ->groupBy('chats.landscaper_id')
+            ->join('users', 'chats.user_id', '=', 'users.id')
+            ->where('chats.landscaper_id', auth()->user()->id)
+            // ->groupBy('chats.landscaper_id')
             ->get();
-
         return view('chat.index', compact('chats'));
     }
+
 
 
     public function chat_landscaper(Request $request)
