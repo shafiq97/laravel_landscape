@@ -34,10 +34,12 @@
         {{ __('Contact No') }} : {{ $user_contact_number }}
     </h6>
     <h6>
-        Provided Area
-        @foreach ($services->unique('location_name') as $service)
-            <p>{{ $service->location_name }}</p>
-        @endforeach
+        <div style="display: flex">
+            Provided Area:
+            @foreach ($services->unique('location_name') as $service)
+                <p> {{ $service->location_name }}</p>
+            @endforeach
+        </div>
     </h6>
     <h3>Reviews</h3>
     @if ($services->count())
