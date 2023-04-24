@@ -69,7 +69,7 @@ return [
     |
     */
 
-    'timezone' => env('APP_TIMEZONE', 'UTC'),
+    'timezone' => env('APP_TIMEZONE', 'Asia/Kuala_Lumpur'),
 
     /*
     |--------------------------------------------------------------------------
@@ -82,7 +82,7 @@ return [
     |
     */
 
-    'locale' => env('APP_DEFAULT_LOCALE', 'de'),
+    'locale' => env('APP_DEFAULT_LOCALE', 'en'),
 
     /*
     |--------------------------------------------------------------------------
