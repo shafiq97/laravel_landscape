@@ -23,9 +23,9 @@ class SendBookingConfirmation implements ShouldQueue
         if (isset($service->booking->bookedByUser) && $service->booking->bookedByUser->email !== $service->booking->email) {
             $notification->route('mail', $service->booking->bookedByUser->email);
         }
-        // $notification->notify(
-        //     new BookingConfirmation($service->booking)
-        // );
+        $notification->notify(
+            new BookingConfirmation($service->booking)
+        );
         Log::info(
             sprintf(
                 'Sent mail notification for booking %s to %s and %s',
