@@ -11,6 +11,7 @@ use App\Models\Booking;
 use App\Models\BookingOption;
 use App\Models\Service;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -41,6 +42,14 @@ class BookingController extends Controller
             );
         }
 
+        // $serviceWithUser = Service::select('services.*', 'users.first_name', 'users.email', 'users.phone')
+        //     ->leftJoin('users', 'users.id', '=', 'services.user_id')
+        //     ->with([
+        //         'bookingOptions' => static fn(HasMany $query) => $query->withCount(['bookings']),
+        //         'subEvents.location',
+        //     ])
+        //     ->findOrFail($service->id);
+
         $this->authorize('viewAny', Booking::class);
 
         return view('bookings.booking_index', [
@@ -54,7 +63,7 @@ class BookingController extends Controller
     public function show(Booking $booking): View
     {
         $this->authorize('view', $booking);
-
+        
         return view('bookings.booking_show', [
             'booking' => $booking,
         ]);

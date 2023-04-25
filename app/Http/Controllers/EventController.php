@@ -34,6 +34,8 @@ class EventController extends Controller
                 'user' => static fn(BelongsTo $query) => $query->select('id', 'first_name'),
             ]);
 
+        
+
         /** @var ?\App\Models\User $user */
         $user = Auth::user();
         if ($user !== null && $user->userRoles()->pluck('name')->contains('Landscaper')) {
