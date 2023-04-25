@@ -6,6 +6,7 @@ use App\Http\Requests\BookingOptionRequest;
 use App\Models\BookingOption;
 use App\Models\Service;
 use App\Models\Form;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
@@ -15,9 +16,15 @@ class BookingOptionController extends Controller
     public function show(Service $service, BookingOption $bookingOption): View
     {
         $this->authorize('view', $bookingOption);
-
+        $serviceWithUser = Service::select('services.*', 'users.first_name', 'users.email', 'users.phone')
+        ->leftJoin('users', 'users.id', '=', 'services.user_id')
+        ->with([
+            'bookingOptions' => static fn(HasMany $query) => $query->withCount(['bookings']),
+            'subEvents.location',
+        ])
+        ->findOrFail($service->id);
         return view('booking_options.booking_option_show', [
-            'service' => $service,
+            'service' => $serviceWithUser,
             'bookingOption' => $bookingOption,
         ]);
     }
