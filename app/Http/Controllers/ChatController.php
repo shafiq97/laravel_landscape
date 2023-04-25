@@ -16,7 +16,22 @@ class ChatController extends Controller
             ->where('chats.landscaper_id', auth()->user()->id)
             ->groupBy('chats.user_id')
             ->get();
-        return view('chat.index', compact('chats'));
+
+        $pending_chats = Chat::select('chats.user_id', 'chats.*', 'users.first_name')
+            ->join('users', 'chats.landscaper_id', '=', 'users.id')
+            ->where('chats.user_id', 1)
+            ->whereNotExists(function ($query) {
+                $query->select(DB::raw(1))
+                    ->from('chats as c2')
+                    ->whereRaw('c2.user_id = chats.landscaper_id')
+                    ->whereRaw('c2.landscaper_id = chats.user_id');
+            })
+            ->distinct()
+            ->get();
+
+
+
+        return view('chat.index', compact('chats', 'pending_chats'));
     }
 
 
