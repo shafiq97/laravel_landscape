@@ -17,8 +17,17 @@
                         <tr>
                             <td>{{ $chat->first_name }}</td>
                             <td>{{ $chat->created_at->format('d/m/Y H:i') }}</td>
-                            <td><a href="{{ route('chat.landscaper', ['user_id' => $chat->user_id, 'landscaper_id' => $chat->landscaper_id, 'user_name' => $chat->first_name]) }}"
-                                    class="btn btn-warning">Chat</a></td>
+                            @php
+                                $loggedInUser = \Illuminate\Support\Facades\Auth::user();
+                                $role = $loggedInUser->userRoles->pluck('name')->toArray();
+                            @endphp
+                            @if ($role[0] == 'Landscaper')
+                                <td><a href="{{ route('chat.landscaper', ['user_id' => $chat->user_id, 'landscaper_id' => $chat->landscaper_id, 'user_name' => $chat->first_name]) }}"
+                                        class="btn btn-warning">Chat</a></td>
+                            @else
+                                <td><a href="{{ route('chat.landscaper', ['user_id' => $chat->landscaper_id, 'landscaper_id' => $chat->user_id, 'user_name' => $chat->first_name]) }}"
+                                        class="btn btn-warning">Chat</a></td>
+                            @endif
                         </tr>
                     @endif
                 @endforeach
@@ -29,7 +38,7 @@
             $loggedInUser = \Illuminate\Support\Facades\Auth::user();
             $role = $loggedInUser->userRoles->pluck('name')->toArray();
         @endphp
-        @if ($role[0] == "User")
+        @if ($role[0] == 'User')
             <h1>Pending Landscaper Reply</h1>
             <table class="table">
                 <thead>
@@ -45,6 +54,7 @@
                             <tr>
                                 <td>{{ $chat->first_name }}</td>
                                 <td>{{ $chat->created_at->format('d/m/Y H:i') }}</td>
+
                                 <td><a href="{{ route('chat.landscaper', ['user_id' => $chat->user_id, 'landscaper_id' => $chat->landscaper_id, 'user_name' => $chat->first_name]) }}"
                                         class="btn btn-warning">Chat</a></td>
                             </tr>
