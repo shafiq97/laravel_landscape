@@ -245,7 +245,7 @@ class DashboardController extends Controller
 
         $chats = Chat::select('chats.*', 'users.first_name')
             ->join('users', 'chats.landscaper_id', '=', 'users.id')
-            ->where('chats.user_id', auth()->user()->id)
+            ->where('chats.landscaper_id', auth()->user()->id)
             ->groupBy('chats.landscaper_id')
             ->get();
 
