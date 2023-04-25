@@ -196,6 +196,6 @@
 
         setInterval(() => {
             window.location.reload();
-        }, 10000); // Reload every 10 seconds (10000 milliseconds)
+        }, 30000); // Reload every 10 seconds (10000 milliseconds)
     </script>
 @endsection

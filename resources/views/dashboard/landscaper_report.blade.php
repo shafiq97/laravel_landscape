@@ -34,7 +34,7 @@
                         @endphp --}}
                         @php
                             $booking_counts = [
-                                'Accepted' => $total_accepted->total_accepted ,
+                                'Accepted' => $total_accepted->total_accepted,
                                 'Pending' => $total_decline->total_decline,
                             ];
                         @endphp
@@ -98,7 +98,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Messages</h5>
                         <div class="container">
-                            <h1>My Chats</h1>
+                            {{-- <h1>My Chats</h1> --}}
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -110,8 +110,7 @@
                                 <tbody>
                                     @foreach ($chats as $chat)
                                         <tr>
-                                            <td> <a
-                                                    href="{{ route('landscaper_profile.index', ['user_id' => $chat->landscaper_id, 'user_name' => $chat->first_name]) }}">{{ $chat->first_name }}</a></span>
+                                            <td> {{ $chat->first_name }}</span>
                                             </td>
                                             <td>{{ $chat->created_at->format('d/m/Y H:i') }}</td>
                                             <td><a href="{{ route('chat.landscaper', ['user_id' => $chat->user_id, 'landscaper_id' => $chat->landscaper_id, 'user_name' => $chat->first_name]) }}"
